@@ -1,0 +1,3437 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>CommuniTrade - Buy, Sell, Rent & Connect Within Your Community</title>
+  <meta name="description" content="A trusted digital marketplace for college campuses, hostels, and local neighborhoods. Buy, sell, rent, or exchange textbooks, lab gear, calculators, and services easily.">
+  
+  <style>
+    /* CommuniTrade - Advanced Styling System */
+    @import url('https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;500;600;700;800&family=Plus+Jakarta+Sans:wght@300;400;500;600;700;800&display=swap');
+
+    :root {
+      /* HSL Color System */
+      --bg-primary: #0b0f19;
+      --bg-secondary: #121826;
+      --bg-glass: rgba(18, 24, 38, 0.7);
+      --bg-glass-card: rgba(30, 41, 59, 0.45);
+      
+      --primary-rgb: 99, 102, 241;   /* Indigo #6366f1 */
+      --primary: rgb(var(--primary-rgb));
+      --primary-hover: #4f46e5;
+      --primary-glow: rgba(99, 102, 241, 0.35);
+      
+      --secondary-rgb: 20, 184, 166; /* Teal #14b8a6 */
+      --secondary: rgb(var(--secondary-rgb));
+      --secondary-glow: rgba(20, 184, 166, 0.25);
+      
+      --accent-rgb: 245, 158, 11;    /* Amber #f59e0b */
+      --accent: rgb(var(--accent-rgb));
+      --accent-glow: rgba(245, 158, 11, 0.25);
+      
+      --danger: #ef4444;
+      --danger-glow: rgba(239, 68, 68, 0.25);
+      
+      --text-primary: #f8fafc;
+      --text-secondary: #94a3b8;
+      --text-muted: #64748b;
+      
+      --border-glass: rgba(255, 255, 255, 0.08);
+      --border-active: rgba(99, 102, 241, 0.4);
+      
+      --radius-lg: 16px;
+      --radius-md: 12px;
+      --radius-sm: 8px;
+      --radius-full: 9999px;
+      
+      --shadow-glow: 0 0 25px rgba(99, 102, 241, 0.15);
+      --shadow-glass: 0 8px 32px 0 rgba(0, 0, 0, 0.5);
+      --transition-smooth: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+      --transition-bounce: all 0.5s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+    }
+
+    /* Base Resets */
+    * {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+    }
+
+    body {
+      background-color: var(--bg-primary);
+      color: var(--text-primary);
+      font-family: 'Plus Jakarta Sans', sans-serif;
+      line-height: 1.5;
+      overflow-x: hidden;
+      background-image: 
+        radial-gradient(circle at 10% 20%, rgba(99, 102, 241, 0.1) 0%, transparent 40%),
+        radial-gradient(circle at 90% 80%, rgba(20, 184, 166, 0.08) 0%, transparent 45%);
+      background-attachment: fixed;
+    }
+
+    h1, h2, h3, h4, h5, h6 {
+      font-family: 'Outfit', sans-serif;
+      font-weight: 700;
+      letter-spacing: -0.02em;
+    }
+
+    button, input, select, textarea {
+      font-family: inherit;
+      color: inherit;
+    }
+
+    /* Glassmorphism Classes */
+    .glass {
+      background: var(--bg-glass);
+      backdrop-filter: blur(12px);
+      -webkit-backdrop-filter: blur(12px);
+      border: 1px solid var(--border-glass);
+      box-shadow: var(--shadow-glass);
+    }
+
+    .glass-card {
+      background: var(--bg-glass-card);
+      backdrop-filter: blur(8px);
+      border: 1px solid var(--border-glass);
+      border-radius: var(--radius-lg);
+      transition: var(--transition-smooth);
+    }
+
+    .glass-card:hover {
+      border-color: rgba(255, 255, 255, 0.15);
+      transform: translateY(-4px);
+      box-shadow: 0 12px 30px rgba(0, 0, 0, 0.4);
+    }
+
+    /* Animations */
+    @keyframes fadeIn {
+      from { opacity: 0; transform: translateY(10px); }
+      to { opacity: 1; transform: translateY(0); }
+    }
+
+    @keyframes scaleIn {
+      from { transform: scale(0.95); opacity: 0; }
+      to { transform: scale(1); opacity: 1; }
+    }
+
+    @keyframes pulseGlow {
+      0%, 100% { box-shadow: 0 0 15px rgba(99, 102, 241, 0.1); }
+      50% { box-shadow: 0 0 25px rgba(99, 102, 241, 0.3); }
+    }
+
+    @keyframes dotPulse {
+      0%, 100% { transform: scale(0.6); opacity: 0.4; }
+      50% { transform: scale(1.1); opacity: 1; }
+    }
+
+    /* Layout Utilities */
+    .container {
+      max-width: 1280px;
+      margin: 0 auto;
+      padding: 0 24px;
+    }
+
+    /* Scrollbar styling */
+    ::-webkit-scrollbar {
+      width: 8px;
+    }
+    ::-webkit-scrollbar-track {
+      background: var(--bg-primary);
+    }
+    ::-webkit-scrollbar-thumb {
+      background: var(--border-glass);
+      border-radius: var(--radius-full);
+    }
+    ::-webkit-scrollbar-thumb:hover {
+      background: var(--text-muted);
+    }
+
+    /* Navbar Component */
+    .navbar {
+      position: sticky;
+      top: 0;
+      z-index: 100;
+      width: 100%;
+      border-bottom: 1px solid var(--border-glass);
+      background: rgba(11, 15, 25, 0.8);
+      backdrop-filter: blur(16px);
+      -webkit-backdrop-filter: blur(16px);
+    }
+
+    .navbar-container {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      height: 72px;
+    }
+
+    .nav-brand {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      text-decoration: none;
+      font-size: 1.5rem;
+      font-weight: 800;
+      color: var(--text-primary);
+      font-family: 'Outfit', sans-serif;
+      background: linear-gradient(135deg, var(--primary) 30%, var(--secondary) 100%);
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+    }
+
+    .nav-brand span {
+      font-size: 1.8rem;
+      -webkit-text-fill-color: initial;
+    }
+
+    .nav-menu {
+      display: flex;
+      align-items: center;
+      gap: 24px;
+    }
+
+    .nav-link {
+      text-decoration: none;
+      color: var(--text-secondary);
+      font-weight: 500;
+      font-size: 0.95rem;
+      transition: var(--transition-smooth);
+      position: relative;
+      padding: 6px 0;
+    }
+
+    .nav-link:hover, .nav-link.active {
+      color: var(--text-primary);
+    }
+
+    .nav-link::after {
+      content: '';
+      position: absolute;
+      bottom: 0;
+      left: 0;
+      width: 0;
+      height: 2px;
+      background: var(--primary);
+      transition: var(--transition-smooth);
+    }
+
+    .nav-link:hover::after, .nav-link.active::after {
+      width: 100%;
+    }
+
+    .nav-actions {
+      display: flex;
+      align-items: center;
+      gap: 16px;
+    }
+
+    .btn {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      gap: 8px;
+      padding: 10px 18px;
+      border-radius: var(--radius-md);
+      font-weight: 600;
+      font-size: 0.9rem;
+      cursor: pointer;
+      transition: var(--transition-bounce);
+      border: none;
+      text-decoration: none;
+    }
+
+    .btn-primary {
+      background: var(--primary);
+      color: white;
+      box-shadow: 0 4px 15px var(--primary-glow);
+    }
+
+    .btn-primary:hover {
+      background: var(--primary-hover);
+      box-shadow: 0 6px 20px rgba(99, 102, 241, 0.5);
+      transform: translateY(-2px);
+    }
+
+    .btn-secondary {
+      background: var(--border-glass);
+      color: var(--text-primary);
+      border: 1px solid var(--border-glass);
+    }
+
+    .btn-secondary:hover {
+      background: rgba(255, 255, 255, 0.08);
+      transform: translateY(-2px);
+    }
+
+    .btn-teal {
+      background: var(--secondary);
+      color: white;
+      box-shadow: 0 4px 15px var(--secondary-glow);
+    }
+
+    .btn-teal:hover {
+      background: #0d9488;
+      transform: translateY(-2px);
+      box-shadow: 0 6px 20px rgba(20, 184, 166, 0.4);
+    }
+
+    .user-profile-badge {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      padding: 6px 12px;
+      border-radius: var(--radius-full);
+      border: 1px solid var(--border-glass);
+      background: rgba(255, 255, 255, 0.03);
+      cursor: pointer;
+      transition: var(--transition-smooth);
+    }
+
+    .user-profile-badge:hover {
+      background: rgba(255, 255, 255, 0.06);
+      border-color: var(--border-active);
+    }
+
+    .user-avatar {
+      width: 32px;
+      height: 32px;
+      border-radius: 50%;
+      object-fit: cover;
+      border: 2px solid var(--primary);
+    }
+
+    .user-name {
+      font-size: 0.9rem;
+      font-weight: 600;
+      max-width: 100px;
+      white-space: nowrap;
+      overflow: hidden;
+      text-overflow: ellipsis;
+    }
+
+    /* Dashboard Hero Block */
+    .hero {
+      position: relative;
+      padding: 60px 0 40px;
+      text-align: center;
+      animation: fadeIn 0.8s ease-out;
+    }
+
+    .hero-tag {
+      display: inline-block;
+      padding: 6px 16px;
+      background: rgba(99, 102, 241, 0.1);
+      border: 1px solid rgba(99, 102, 241, 0.2);
+      border-radius: var(--radius-full);
+      color: var(--primary);
+      font-size: 0.85rem;
+      font-weight: 700;
+      margin-bottom: 20px;
+      text-transform: uppercase;
+      letter-spacing: 0.05em;
+    }
+
+    .hero h1 {
+      font-size: 3rem;
+      line-height: 1.15;
+      margin-bottom: 16px;
+      background: linear-gradient(to right, #ffffff 40%, var(--text-secondary) 100%);
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+    }
+
+    .hero h1 span {
+      background: linear-gradient(135deg, var(--primary) 30%, var(--secondary) 100%);
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+    }
+
+    .hero-subtitle {
+      font-size: 1.15rem;
+      color: var(--text-secondary);
+      max-width: 600px;
+      margin: 0 auto 40px;
+    }
+
+    /* Stats Dashboard Component */
+    .stats-banner {
+      display: grid;
+      grid-template-columns: repeat(4, 1fr);
+      gap: 20px;
+      margin-bottom: 60px;
+      animation: fadeIn 1s ease-out;
+    }
+
+    .stats-card {
+      padding: 24px;
+      border-radius: var(--radius-lg);
+      text-align: center;
+      position: relative;
+      overflow: hidden;
+    }
+
+    .stats-card::before {
+      content: '';
+      position: absolute;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 4px;
+      background: linear-gradient(90deg, var(--primary), var(--secondary));
+    }
+
+    .stats-num {
+      font-family: 'Outfit', sans-serif;
+      font-size: 2.25rem;
+      font-weight: 800;
+      color: var(--text-primary);
+      margin-bottom: 6px;
+    }
+
+    .stats-num span {
+      color: var(--secondary);
+    }
+
+    .stats-label {
+      font-size: 0.85rem;
+      color: var(--text-secondary);
+      font-weight: 600;
+      text-transform: uppercase;
+      letter-spacing: 0.03em;
+    }
+
+    /* Search and Filters Hub */
+    .search-hub {
+      padding: 24px;
+      border-radius: var(--radius-lg);
+      margin-bottom: 40px;
+      animation: fadeIn 0.6s ease-out;
+    }
+
+    .search-bar-container {
+      display: flex;
+      gap: 16px;
+      margin-bottom: 20px;
+    }
+
+    .search-input-wrapper {
+      position: relative;
+      flex: 1;
+    }
+
+    .search-icon {
+      position: absolute;
+      left: 16px;
+      top: 50%;
+      transform: translateY(-50%);
+      color: var(--text-muted);
+      font-size: 1.1rem;
+    }
+
+    .search-input {
+      width: 100%;
+      padding: 14px 16px 14px 48px;
+      background: rgba(11, 15, 25, 0.6);
+      border: 1px solid var(--border-glass);
+      border-radius: var(--radius-md);
+      font-size: 1rem;
+      transition: var(--transition-smooth);
+    }
+
+    .search-input:focus {
+      outline: none;
+      border-color: var(--primary);
+      box-shadow: 0 0 0 3px rgba(99, 102, 241, 0.15);
+    }
+
+    .filter-bar {
+      display: flex;
+      flex-wrap: wrap;
+      justify-content: space-between;
+      align-items: center;
+      gap: 20px;
+      border-top: 1px solid var(--border-glass);
+      padding-top: 20px;
+    }
+
+    .trade-tabs {
+      display: flex;
+      background: rgba(11, 15, 25, 0.5);
+      border: 1px solid var(--border-glass);
+      padding: 4px;
+      border-radius: var(--radius-md);
+    }
+
+    .trade-tab {
+      padding: 8px 18px;
+      border-radius: var(--radius-sm);
+      font-size: 0.85rem;
+      font-weight: 600;
+      cursor: pointer;
+      transition: var(--transition-smooth);
+    }
+
+    .trade-tab:hover {
+      color: var(--text-primary);
+    }
+
+    .trade-tab.active {
+      background: var(--primary);
+      color: white;
+    }
+
+    .filter-controls {
+      display: flex;
+      gap: 16px;
+      align-items: center;
+    }
+
+    .filter-group {
+      display: flex;
+      align-items: center;
+      gap: 8px;
+    }
+
+    .filter-label {
+      font-size: 0.85rem;
+      color: var(--text-secondary);
+      font-weight: 600;
+    }
+
+    .filter-select {
+      padding: 8px 16px;
+      background: rgba(11, 15, 25, 0.5);
+      border: 1px solid var(--border-glass);
+      border-radius: var(--radius-sm);
+      font-size: 0.85rem;
+      cursor: pointer;
+      transition: var(--transition-smooth);
+    }
+
+    .filter-select:focus {
+      outline: none;
+      border-color: var(--primary);
+    }
+
+    /* Category Quick Picker */
+    .category-picker {
+      display: flex;
+      gap: 12px;
+      overflow-x: auto;
+      padding: 4px 4px 16px;
+      margin-bottom: 30px;
+    }
+
+    .category-chip {
+      flex-shrink: 0;
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      padding: 10px 20px;
+      border-radius: var(--radius-full);
+      border: 1px solid var(--border-glass);
+      background: rgba(255, 255, 255, 0.02);
+      cursor: pointer;
+      font-size: 0.9rem;
+      font-weight: 600;
+      color: var(--text-secondary);
+      transition: var(--transition-bounce);
+    }
+
+    .category-chip:hover {
+      background: rgba(255, 255, 255, 0.05);
+      border-color: rgba(255, 255, 255, 0.15);
+      transform: translateY(-2px);
+    }
+
+    .category-chip.active {
+      background: rgba(99, 102, 241, 0.15);
+      border-color: var(--primary);
+      color: var(--text-primary);
+      box-shadow: 0 4px 12px rgba(99, 102, 241, 0.1);
+    }
+
+    .category-picker::-webkit-scrollbar {
+      height: 4px;
+    }
+
+    /* Feed Title / Stats */
+    .feed-header {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      margin-bottom: 24px;
+    }
+
+    .feed-title {
+      font-size: 1.5rem;
+      font-weight: 700;
+    }
+
+    .feed-title span {
+      font-weight: 400;
+      color: var(--text-secondary);
+      font-size: 1.1rem;
+      margin-left: 8px;
+    }
+
+    /* Product Grid */
+    .product-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+      gap: 30px;
+      margin-bottom: 80px;
+    }
+
+    /* Product Card Design */
+    .product-card {
+      display: flex;
+      flex-direction: column;
+      height: 100%;
+      overflow: hidden;
+      position: relative;
+    }
+
+    .card-img-wrapper {
+      position: relative;
+      padding-top: 65%; /* Aspect ratio */
+      overflow: hidden;
+      border-bottom: 1px solid var(--border-glass);
+    }
+
+    .card-img {
+      position: absolute;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      transition: transform 0.5s ease;
+    }
+
+    .product-card:hover .card-img {
+      transform: scale(1.08);
+    }
+
+    .card-badge {
+      position: absolute;
+      top: 12px;
+      left: 12px;
+      padding: 4px 10px;
+      border-radius: var(--radius-sm);
+      font-size: 0.75rem;
+      font-weight: 700;
+      text-transform: uppercase;
+      letter-spacing: 0.05em;
+      color: white;
+    }
+
+    .badge-buy { background: var(--primary); }
+    .badge-rent { background: var(--secondary); }
+    .badge-exchange { background: var(--accent); }
+
+    .card-views {
+      position: absolute;
+      bottom: 12px;
+      right: 12px;
+      padding: 2px 8px;
+      background: rgba(11, 15, 25, 0.75);
+      border-radius: var(--radius-sm);
+      font-size: 0.75rem;
+      color: var(--text-secondary);
+      display: flex;
+      align-items: center;
+      gap: 4px;
+    }
+
+    .card-body {
+      padding: 20px;
+      display: flex;
+      flex-direction: column;
+      flex: 1;
+    }
+
+    .card-meta {
+      display: flex;
+      justify-content: space-between;
+      margin-bottom: 10px;
+      font-size: 0.75rem;
+      color: var(--text-muted);
+    }
+
+    .card-title {
+      font-size: 1.1rem;
+      font-weight: 600;
+      margin-bottom: 10px;
+      line-height: 1.35;
+      color: var(--text-primary);
+      display: -webkit-box;
+      -webkit-line-clamp: 2;
+      -webkit-box-orient: vertical;
+      overflow: hidden;
+      height: 2.7rem;
+    }
+
+    .card-desc {
+      font-size: 0.85rem;
+      color: var(--text-secondary);
+      margin-bottom: 20px;
+      display: -webkit-box;
+      -webkit-line-clamp: 2;
+      -webkit-box-orient: vertical;
+      overflow: hidden;
+      height: 2.5rem;
+    }
+
+    .card-footer {
+      margin-top: auto;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      border-top: 1px solid var(--border-glass);
+      padding-top: 16px;
+    }
+
+    .card-price {
+      font-size: 1.25rem;
+      font-weight: 800;
+      font-family: 'Outfit', sans-serif;
+      color: var(--text-primary);
+    }
+
+    .card-price span {
+      font-size: 0.85rem;
+      color: var(--text-secondary);
+      font-weight: 400;
+    }
+
+    .card-exchange-text {
+      font-size: 0.8rem;
+      font-weight: 600;
+      color: var(--accent);
+      max-width: 140px;
+      white-space: nowrap;
+      overflow: hidden;
+      text-overflow: ellipsis;
+    }
+
+    .seller-indicator {
+      display: flex;
+      align-items: center;
+      gap: 8px;
+    }
+
+    .seller-avatar {
+      width: 24px;
+      height: 24px;
+      border-radius: 50%;
+      object-fit: cover;
+    }
+
+    .seller-info {
+      display: flex;
+      flex-direction: column;
+    }
+
+    .seller-name {
+      font-size: 0.75rem;
+      font-weight: 600;
+    }
+
+    .seller-trust {
+      font-size: 0.65rem;
+      color: var(--secondary);
+      font-weight: 700;
+    }
+
+    /* Modals Core Overlay */
+    .modal-overlay {
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100vw;
+      height: 100vh;
+      background: rgba(11, 15, 25, 0.75);
+      backdrop-filter: blur(8px);
+      -webkit-backdrop-filter: blur(8px);
+      z-index: 1000;
+      display: none; /* Controlled by state */
+      align-items: center;
+      justify-content: center;
+      padding: 24px;
+      animation: fadeIn 0.25s ease-out;
+    }
+
+    .modal-overlay.active {
+      display: flex;
+    }
+
+    .modal-content {
+      background: var(--bg-secondary);
+      border: 1px solid var(--border-glass);
+      border-radius: var(--radius-lg);
+      max-width: 720px;
+      width: 100%;
+      max-height: 90vh;
+      overflow-y: auto;
+      position: relative;
+      box-shadow: 0 20px 50px rgba(0,0,0,0.6);
+      animation: scaleIn 0.3s cubic-bezier(0.34, 1.56, 0.64, 1);
+    }
+
+    .modal-content-large {
+      max-width: 900px;
+    }
+
+    .modal-close {
+      position: absolute;
+      top: 20px;
+      right: 20px;
+      width: 32px;
+      height: 32px;
+      border-radius: 50%;
+      background: rgba(255,255,255,0.03);
+      border: 1px solid var(--border-glass);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      cursor: pointer;
+      transition: var(--transition-smooth);
+      color: var(--text-secondary);
+      z-index: 10;
+    }
+
+    .modal-close:hover {
+      background: rgba(255,255,255,0.08);
+      color: var(--text-primary);
+      transform: rotate(90deg);
+    }
+
+    /* Product Detail View */
+    .detail-grid {
+      display: grid;
+      grid-template-columns: 1.1fr 1fr;
+      gap: 30px;
+    }
+
+    @media (max-width: 768px) {
+      .detail-grid {
+        grid-template-columns: 1fr;
+      }
+    }
+
+    .detail-img-panel {
+      border-radius: var(--radius-md);
+      overflow: hidden;
+      position: relative;
+      border: 1px solid var(--border-glass);
+    }
+
+    .detail-img {
+      width: 100%;
+      height: 100%;
+      min-height: 300px;
+      object-fit: cover;
+    }
+
+    .detail-body {
+      padding: 30px;
+    }
+
+    .detail-header {
+      margin-bottom: 20px;
+    }
+
+    .detail-category-tag {
+      display: inline-block;
+      padding: 4px 10px;
+      background: rgba(255,255,255,0.05);
+      border-radius: var(--radius-sm);
+      font-size: 0.75rem;
+      color: var(--text-secondary);
+      margin-bottom: 12px;
+      text-transform: uppercase;
+    }
+
+    .detail-title {
+      font-size: 1.75rem;
+      font-weight: 700;
+      line-height: 1.25;
+      margin-bottom: 10px;
+    }
+
+    .detail-price-line {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      margin-bottom: 24px;
+    }
+
+    .detail-price {
+      font-size: 1.8rem;
+      font-weight: 800;
+      font-family: 'Outfit', sans-serif;
+      color: var(--text-primary);
+    }
+
+    .detail-price span {
+      font-size: 1rem;
+      font-weight: 400;
+      color: var(--text-secondary);
+    }
+
+    .detail-exchange-box {
+      background: rgba(245, 158, 11, 0.08);
+      border: 1px solid rgba(245, 158, 11, 0.2);
+      padding: 12px 16px;
+      border-radius: var(--radius-md);
+      color: var(--accent);
+      font-size: 0.9rem;
+      font-weight: 600;
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      margin-top: 10px;
+    }
+
+    .detail-info-row {
+      display: flex;
+      gap: 30px;
+      border-top: 1px solid var(--border-glass);
+      border-bottom: 1px solid var(--border-glass);
+      padding: 16px 0;
+      margin-bottom: 24px;
+    }
+
+    .detail-info-item {
+      display: flex;
+      flex-direction: column;
+    }
+
+    .detail-info-label {
+      font-size: 0.75rem;
+      color: var(--text-muted);
+      text-transform: uppercase;
+    }
+
+    .detail-info-val {
+      font-size: 0.9rem;
+      font-weight: 600;
+    }
+
+    .detail-desc {
+      font-size: 0.95rem;
+      color: var(--text-secondary);
+      line-height: 1.6;
+      margin-bottom: 30px;
+    }
+
+    /* Seller Profile Inside Details */
+    .seller-detail-card {
+      padding: 20px;
+      border-radius: var(--radius-md);
+      border: 1px solid var(--border-glass);
+      background: rgba(255, 255, 255, 0.01);
+      margin-bottom: 30px;
+    }
+
+    .seller-card-header {
+      display: flex;
+      align-items: center;
+      gap: 16px;
+      margin-bottom: 14px;
+    }
+
+    .seller-detail-avatar {
+      width: 48px;
+      height: 48px;
+      border-radius: 50%;
+      object-fit: cover;
+      border: 2px solid var(--primary);
+    }
+
+    .seller-detail-info {
+      flex: 1;
+    }
+
+    .seller-detail-name {
+      font-size: 1rem;
+      font-weight: 600;
+    }
+
+    .seller-detail-score {
+      font-size: 0.8rem;
+      color: var(--secondary);
+      font-weight: 700;
+    }
+
+    .seller-badges {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 6px;
+      margin-top: 10px;
+    }
+
+    .seller-badge {
+      padding: 2px 8px;
+      background: rgba(20, 184, 166, 0.1);
+      border: 1px solid rgba(20, 184, 166, 0.2);
+      color: var(--secondary);
+      border-radius: var(--radius-sm);
+      font-size: 0.7rem;
+      font-weight: 600;
+    }
+
+    .detail-actions {
+      display: flex;
+      gap: 16px;
+    }
+
+    .detail-actions .btn {
+      flex: 1;
+    }
+
+    /* Review Section Styling */
+    .reviews-section {
+      border-top: 1px solid var(--border-glass);
+      padding-top: 30px;
+      margin-top: 30px;
+    }
+
+    .reviews-title {
+      font-size: 1.25rem;
+      margin-bottom: 20px;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+    }
+
+    .reviews-list {
+      display: flex;
+      flex-direction: column;
+      gap: 16px;
+      margin-bottom: 24px;
+    }
+
+    .review-item {
+      padding: 16px;
+      border-radius: var(--radius-md);
+      background: rgba(255, 255, 255, 0.02);
+      border: 1px solid var(--border-glass);
+    }
+
+    .review-header {
+      display: flex;
+      justify-content: space-between;
+      margin-bottom: 8px;
+    }
+
+    .reviewer-name {
+      font-size: 0.9rem;
+      font-weight: 600;
+    }
+
+    .review-rating {
+      color: #fbbf24;
+      font-size: 0.8rem;
+    }
+
+    .review-comment {
+      font-size: 0.85rem;
+      color: var(--text-secondary);
+    }
+
+    .review-date {
+      font-size: 0.75rem;
+      color: var(--text-muted);
+      text-align: right;
+      margin-top: 6px;
+    }
+
+    .review-form {
+      display: flex;
+      flex-direction: column;
+      gap: 12px;
+      background: rgba(11, 15, 25, 0.4);
+      padding: 20px;
+      border-radius: var(--radius-md);
+      border: 1px solid var(--border-glass);
+    }
+
+    .rating-select {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+    }
+
+    .stars-picker {
+      display: flex;
+      gap: 4px;
+    }
+
+    .star-btn {
+      background: none;
+      border: none;
+      color: var(--text-muted);
+      font-size: 1.25rem;
+      cursor: pointer;
+      transition: var(--transition-smooth);
+    }
+
+    .star-btn.active, .star-btn:hover {
+      color: #fbbf24;
+      transform: scale(1.15);
+    }
+
+    .review-textarea {
+      width: 100%;
+      min-height: 80px;
+      padding: 12px;
+      background: rgba(11, 15, 25, 0.5);
+      border: 1px solid var(--border-glass);
+      border-radius: var(--radius-sm);
+      resize: vertical;
+      font-size: 0.85rem;
+    }
+
+    .review-textarea:focus {
+      outline: none;
+      border-color: var(--primary);
+    }
+
+    /* Chat Drawer Side Drawer Panel */
+    .chat-drawer {
+      position: fixed;
+      top: 0;
+      right: 0;
+      width: 420px;
+      height: 100vh;
+      z-index: 1001;
+      background: var(--bg-secondary);
+      border-left: 1px solid var(--border-glass);
+      box-shadow: -10px 0 40px rgba(0,0,0,0.6);
+      display: flex;
+      flex-direction: column;
+      transform: translateX(100%);
+      transition: transform 0.4s cubic-bezier(0.16, 1, 0.3, 1);
+    }
+
+    @media (max-width: 480px) {
+      .chat-drawer {
+        width: 100%;
+      }
+    }
+
+    .chat-drawer.active {
+      transform: translateX(0);
+    }
+
+    .chat-header {
+      padding: 20px;
+      border-bottom: 1px solid var(--border-glass);
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      background: rgba(11, 15, 25, 0.4);
+    }
+
+    .chat-seller-block {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+    }
+
+    .chat-title {
+      font-size: 1.1rem;
+      font-weight: 700;
+    }
+
+    .chat-subtitle {
+      font-size: 0.75rem;
+      color: var(--text-secondary);
+      max-width: 180px;
+      white-space: nowrap;
+      overflow: hidden;
+      text-overflow: ellipsis;
+    }
+
+    .chat-close {
+      background: none;
+      border: none;
+      font-size: 1.5rem;
+      cursor: pointer;
+      color: var(--text-secondary);
+      transition: var(--transition-smooth);
+    }
+
+    .chat-close:hover {
+      color: var(--text-primary);
+      transform: rotate(90deg);
+    }
+
+    /* Chat Body (Messages) */
+    .chat-body {
+      flex: 1;
+      overflow-y: auto;
+      padding: 20px;
+      display: flex;
+      flex-direction: column;
+      gap: 16px;
+    }
+
+    .chat-date-divider {
+      text-align: center;
+      font-size: 0.7rem;
+      color: var(--text-muted);
+      text-transform: uppercase;
+      margin: 10px 0;
+    }
+
+    .msg-wrapper {
+      display: flex;
+      gap: 10px;
+      max-width: 80%;
+    }
+
+    .msg-wrapper.received {
+      align-self: flex-start;
+    }
+
+    .msg-wrapper.sent {
+      align-self: flex-end;
+      flex-direction: row-reverse;
+    }
+
+    .msg-avatar {
+      width: 28px;
+      height: 28px;
+      border-radius: 50%;
+      object-fit: cover;
+      flex-shrink: 0;
+    }
+
+    .msg-bubble {
+      padding: 10px 14px;
+      border-radius: var(--radius-md);
+      font-size: 0.88rem;
+      position: relative;
+      line-height: 1.4;
+    }
+
+    .received .msg-bubble {
+      background: rgba(255, 255, 255, 0.04);
+      border: 1px solid var(--border-glass);
+      border-topLeft-radius: 0;
+      color: var(--text-primary);
+    }
+
+    .sent .msg-bubble {
+      background: var(--primary);
+      border-topRight-radius: 0;
+      color: white;
+      box-shadow: 0 4px 12px rgba(99, 102, 241, 0.2);
+    }
+
+    .msg-time {
+      font-size: 0.65rem;
+      color: var(--text-muted);
+      margin-top: 4px;
+      text-align: right;
+    }
+
+    .sent .msg-time {
+      color: rgba(255, 255, 255, 0.7);
+    }
+
+    /* Typing Indicator Animation */
+    .typing-indicator {
+      display: none;
+      align-items: center;
+      gap: 4px;
+      padding: 12px 16px;
+      border-radius: var(--radius-md);
+      background: rgba(255,255,255,0.03);
+      border: 1px solid var(--border-glass);
+      align-self: flex-start;
+      margin-left: 38px;
+    }
+
+    .typing-dot {
+      width: 6px;
+      height: 6px;
+      background: var(--text-secondary);
+      border-radius: 50%;
+      animation: dotPulse 1.4s infinite ease-in-out;
+    }
+
+    .typing-dot:nth-child(2) { animation-delay: 0.2s; }
+    .typing-dot:nth-child(3) { animation-delay: 0.4s; }
+
+    /* Chat Input Footer */
+    .chat-footer {
+      padding: 16px 20px;
+      border-top: 1px solid var(--border-glass);
+      background: rgba(11, 15, 25, 0.5);
+    }
+
+    .chat-input-wrapper {
+      display: flex;
+      gap: 12px;
+    }
+
+    .chat-input {
+      flex: 1;
+      padding: 12px 16px;
+      background: rgba(11, 15, 25, 0.6);
+      border: 1px solid var(--border-glass);
+      border-radius: var(--radius-md);
+      font-size: 0.9rem;
+      transition: var(--transition-smooth);
+    }
+
+    .chat-input:focus {
+      outline: none;
+      border-color: var(--primary);
+    }
+
+    .chat-send-btn {
+      width: 44px;
+      height: 44px;
+      border-radius: var(--radius-md);
+      background: var(--primary);
+      color: white;
+      border: none;
+      cursor: pointer;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 1.1rem;
+      transition: var(--transition-bounce);
+      box-shadow: 0 4px 12px var(--primary-glow);
+    }
+
+    .chat-send-btn:hover {
+      background: var(--primary-hover);
+      transform: scale(1.05);
+    }
+
+    /* Create Listing Form Wizard */
+    .wizard-steps {
+      display: flex;
+      justify-content: space-between;
+      position: relative;
+      margin-bottom: 30px;
+      padding: 0 20px;
+    }
+
+    .wizard-steps::before {
+      content: '';
+      position: absolute;
+      top: 16px;
+      left: 20px;
+      right: 20px;
+      height: 2px;
+      background: var(--border-glass);
+      z-index: 1;
+    }
+
+    .wizard-progress-bar {
+      position: absolute;
+      top: 16px;
+      left: 20px;
+      width: 0%; /* Dynamic */
+      height: 2px;
+      background: var(--primary);
+      z-index: 1;
+      transition: var(--transition-smooth);
+    }
+
+    .step-node {
+      width: 34px;
+      height: 34px;
+      border-radius: 50%;
+      background: var(--bg-secondary);
+      border: 2px solid var(--border-glass);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      z-index: 2;
+      font-size: 0.85rem;
+      font-weight: 700;
+      transition: var(--transition-smooth);
+      color: var(--text-secondary);
+    }
+
+    .step-node.active {
+      border-color: var(--primary);
+      color: var(--primary);
+      box-shadow: 0 0 10px var(--primary-glow);
+    }
+
+    .step-node.completed {
+      background: var(--primary);
+      border-color: var(--primary);
+      color: white;
+    }
+
+    .wizard-panel {
+      display: none; /* Regulated by state */
+      padding: 0 20px 30px;
+      animation: fadeIn 0.4s ease-out;
+    }
+
+    .wizard-panel.active {
+      display: block;
+    }
+
+    .form-group {
+      display: flex;
+      flex-direction: column;
+      gap: 8px;
+      margin-bottom: 20px;
+    }
+
+    .form-row {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 20px;
+    }
+
+    @media (max-width: 580px) {
+      .form-row {
+        grid-template-columns: 1fr;
+      }
+    }
+
+    .form-label {
+      font-size: 0.88rem;
+      font-weight: 600;
+      color: var(--text-secondary);
+    }
+
+    .form-control {
+      padding: 12px 16px;
+      background: rgba(11, 15, 25, 0.4);
+      border: 1px solid var(--border-glass);
+      border-radius: var(--radius-md);
+      font-size: 0.95rem;
+      transition: var(--transition-smooth);
+    }
+
+    .form-control:focus {
+      outline: none;
+      border-color: var(--primary);
+      box-shadow: 0 0 0 3px rgba(99, 102, 241, 0.1);
+    }
+
+    /* Image Upload Mock box */
+    .upload-dropzone {
+      border: 2px dashed var(--border-glass);
+      padding: 30px;
+      text-align: center;
+      border-radius: var(--radius-md);
+      background: rgba(255,255,255,0.01);
+      cursor: pointer;
+      transition: var(--transition-smooth);
+    }
+
+    .upload-dropzone:hover {
+      border-color: var(--primary);
+      background: rgba(99, 102, 241, 0.02);
+    }
+
+    .upload-icon {
+      font-size: 2.25rem;
+      color: var(--text-muted);
+      margin-bottom: 10px;
+    }
+
+    .upload-text {
+      font-size: 0.9rem;
+      font-weight: 600;
+      margin-bottom: 4px;
+    }
+
+    .upload-subtext {
+      font-size: 0.75rem;
+      color: var(--text-muted);
+    }
+
+    .preview-grid {
+      display: grid;
+      grid-template-columns: repeat(4, 1fr);
+      gap: 12px;
+      margin-top: 14px;
+    }
+
+    .preview-thumb {
+      aspect-ratio: 1;
+      border-radius: var(--radius-sm);
+      overflow: hidden;
+      position: relative;
+      border: 1px solid var(--border-glass);
+    }
+
+    .preview-thumb img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+    }
+
+    .preview-thumb-close {
+      position: absolute;
+      top: 4px;
+      right: 4px;
+      width: 18px;
+      height: 18px;
+      border-radius: 50%;
+      background: rgba(0,0,0,0.6);
+      border: none;
+      color: white;
+      font-size: 0.7rem;
+      cursor: pointer;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
+
+    .wizard-footer {
+      display: flex;
+      justify-content: space-between;
+      border-top: 1px solid var(--border-glass);
+      padding: 20px;
+      background: rgba(11, 15, 25, 0.4);
+    }
+
+    /* User Account Verification Dialog */
+    .auth-box {
+      padding: 30px;
+    }
+
+    .auth-header {
+      text-align: center;
+      margin-bottom: 30px;
+    }
+
+    .auth-header h2 {
+      font-size: 1.75rem;
+      margin-bottom: 6px;
+    }
+
+    .auth-header p {
+      font-size: 0.85rem;
+      color: var(--text-secondary);
+    }
+
+    .domain-hint {
+      font-size: 0.75rem;
+      color: var(--secondary);
+      font-weight: 600;
+      margin-top: 6px;
+    }
+
+    .auth-footer {
+      text-align: center;
+      margin-top: 24px;
+      font-size: 0.85rem;
+      color: var(--text-secondary);
+    }
+
+    .auth-toggle {
+      color: var(--primary);
+      font-weight: 600;
+      cursor: pointer;
+      text-decoration: underline;
+    }
+
+    /* Safe Hub Map Component */
+    .safe-zones-section {
+      margin-bottom: 80px;
+    }
+
+    .safe-zones-grid {
+      display: grid;
+      grid-template-columns: 1fr 1.2fr;
+      gap: 30px;
+    }
+
+    @media (max-width: 768px) {
+      .safe-zones-grid {
+        grid-template-columns: 1fr;
+      }
+    }
+
+    .safe-zones-list {
+      display: flex;
+      flex-direction: column;
+      gap: 16px;
+    }
+
+    .zone-card {
+      padding: 20px;
+      border-radius: var(--radius-md);
+      border: 1px solid var(--border-glass);
+      cursor: pointer;
+      transition: var(--transition-smooth);
+      background: rgba(255,255,255,0.01);
+    }
+
+    .zone-card:hover, .zone-card.active {
+      background: rgba(99, 102, 241, 0.05);
+      border-color: var(--primary);
+    }
+
+    .zone-header {
+      display: flex;
+      justify-content: space-between;
+      margin-bottom: 8px;
+    }
+
+    .zone-name {
+      font-weight: 700;
+      font-size: 1rem;
+    }
+
+    .zone-rating {
+      font-size: 0.8rem;
+      color: var(--secondary);
+      font-weight: 700;
+      display: flex;
+      align-items: center;
+      gap: 4px;
+    }
+
+    .zone-desc {
+      font-size: 0.85rem;
+      color: var(--text-secondary);
+    }
+
+    .map-container {
+      border-radius: var(--radius-lg);
+      border: 1px solid var(--border-glass);
+      overflow: hidden;
+      position: relative;
+      min-height: 300px;
+      background: #111827;
+    }
+
+    .map-visualizer {
+      position: absolute;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      background-image: 
+        radial-gradient(#1f2937 1px, transparent 1px),
+        radial-gradient(#1f2937 1px, transparent 1px);
+      background-size: 20px 20px;
+      background-position: 0 0, 10px 10px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
+
+    .map-route-layer {
+      position: absolute;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      pointer-events: none;
+    }
+
+    .map-pin {
+      position: absolute;
+      transform: translate(-50%, -50%);
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      cursor: pointer;
+      transition: var(--transition-bounce);
+      z-index: 5;
+    }
+
+    .map-pin:hover, .map-pin.active {
+      z-index: 10;
+    }
+
+    .pin-icon {
+      font-size: 2rem;
+      filter: drop-shadow(0 4px 8px rgba(0,0,0,0.5));
+      transition: var(--transition-smooth);
+    }
+
+    .map-pin:hover .pin-icon, .map-pin.active .pin-icon {
+      transform: translateY(-4px) scale(1.1);
+      filter: drop-shadow(0 6px 12px var(--primary-glow));
+    }
+
+    .pin-label {
+      padding: 4px 8px;
+      background: rgba(11, 15, 25, 0.9);
+      border: 1px solid var(--border-glass);
+      border-radius: var(--radius-sm);
+      font-size: 0.7rem;
+      font-weight: 600;
+      white-space: nowrap;
+      margin-top: 4px;
+      color: var(--text-primary);
+    }
+
+    .map-pin.active .pin-label {
+      border-color: var(--primary);
+      color: var(--primary);
+      box-shadow: 0 0 10px var(--primary-glow);
+    }
+
+    /* Toast Message Indicator */
+    .toast-msg {
+      position: fixed;
+      bottom: 24px;
+      left: 24px;
+      padding: 14px 20px;
+      border-radius: var(--radius-md);
+      z-index: 2000;
+      font-size: 0.9rem;
+      font-weight: 600;
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      box-shadow: 0 8px 24px rgba(0,0,0,0.5);
+      animation: fadeIn 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+      transform: translateY(100px);
+      transition: transform 0.4s ease, opacity 0.4s ease;
+      opacity: 0;
+    }
+
+    .toast-msg.show {
+      transform: translateY(0);
+      opacity: 1;
+    }
+
+    .toast-success {
+      background: rgba(20, 184, 166, 0.95);
+      color: white;
+      border: 1px solid rgba(255,255,255,0.2);
+    }
+
+    .toast-info {
+      background: rgba(99, 102, 241, 0.95);
+      color: white;
+      border: 1px solid rgba(255,255,255,0.2);
+    }
+
+    /* Empty State / Not found */
+    .empty-state {
+      text-align: center;
+      padding: 60px 20px;
+      background: var(--bg-glass-card);
+      border: 1px solid var(--border-glass);
+      border-radius: var(--radius-lg);
+      max-width: 480px;
+      margin: 0 auto 80px;
+    }
+
+    .empty-icon {
+      font-size: 3rem;
+      margin-bottom: 16px;
+    }
+
+    .empty-title {
+      font-size: 1.25rem;
+      font-weight: 700;
+      margin-bottom: 8px;
+    }
+
+    .empty-desc {
+      font-size: 0.88rem;
+      color: var(--text-secondary);
+    }
+
+    /* Footer Section */
+    .footer {
+      border-top: 1px solid var(--border-glass);
+      padding: 40px 0;
+      text-align: center;
+      font-size: 0.85rem;
+      color: var(--text-muted);
+      background: rgba(11, 15, 25, 0.5);
+    }
+
+    .footer-links {
+      display: flex;
+      justify-content: center;
+      gap: 24px;
+      margin-bottom: 16px;
+    }
+
+    .footer-link {
+      color: var(--text-secondary);
+      text-decoration: none;
+      transition: var(--transition-smooth);
+    }
+
+    .footer-link:hover {
+      color: var(--text-primary);
+    }
+  </style>
+</head>
+<body>
+
+  <!-- Top Navigation Bar -->
+  <nav class="navbar" id="navbar">
+    <div class="container navbar-container">
+      <a href="#" class="nav-brand" id="nav-logo">
+        <span>🤝</span> CommuniTrade
+      </a>
+      
+      <div class="nav-menu">
+        <a href="#" class="nav-link active" id="nav-home">Explore Feed</a>
+        <a href="#safe-zones" class="nav-link" id="nav-zones">Safe Meetup Hubs</a>
+      </div>
+
+      <div class="nav-actions">
+        <button class="btn btn-teal" id="create-listing-nav-btn">＋ Post An Item</button>
+        
+        <!-- Auth / Profile Area -->
+        <div id="auth-nav-container">
+          <button class="btn btn-primary" id="login-trigger-btn">Sign In</button>
+        </div>
+      </div>
+    </div>
+  </nav>
+
+  <!-- Hero Header Banner -->
+  <header class="hero">
+    <div class="container">
+      <div class="hero-tag" id="hero-announcement">🏫 Active in Campus & hostel sectors</div>
+      <h1 id="hero-title">Buy, Sell, Rent & Connect<br>Within <span>Your Community</span></h1>
+      <p class="hero-subtitle" id="hero-desc">The trusted, sustainable marketplace for textbooks, electronics, cycle rentals, and local services. Swap items, save money, and reduce waste today!</p>
+      
+      <div class="hero-actions">
+        <button class="btn btn-primary btn-lg" id="explore-hero-btn" onclick="document.getElementById('search-hub-section').scrollIntoView({behavior: 'smooth'})">🔍 Start Browsing</button>
+        <button class="btn btn-secondary btn-lg" id="post-hero-btn" style="margin-left: 12px;">＋ List a Product</button>
+      </div>
+    </div>
+  </header>
+
+  <!-- Campus Environmental / Savings Stats -->
+  <section class="container stats-banner" id="stats-section">
+    <div class="stats-card glass" id="stat-members">
+      <div class="stats-num" id="stat-members-val">520<span>+</span></div>
+      <div class="stats-label">Verified Members</div>
+    </div>
+    <div class="stats-card glass" id="stat-transactions">
+      <div class="stats-num" id="stat-trans-val">1,180<span>+</span></div>
+      <div class="stats-label">Successful Swaps</div>
+    </div>
+    <div class="stats-card glass" id="stat-rentals">
+      <div class="stats-num" id="stat-rent-val">42</div>
+      <div class="stats-label">Active Cycle Rentals</div>
+    </div>
+    <div class="stats-card glass" id="stat-waste">
+      <div class="stats-num" id="stat-waste-val">3.4<span>t</span></div>
+      <div class="stats-label">Waste Saved</div>
+    </div>
+  </section>
+
+  <!-- Main Feed Section -->
+  <main class="container" id="feed-container">
+    
+    <!-- Search & Filter Hub -->
+    <section class="search-hub glass" id="search-hub-section">
+      <div class="search-bar-container">
+        <div class="search-input-wrapper">
+          <span class="search-icon">🔍</span>
+          <input type="text" class="search-input" id="search-query-input" placeholder="Search textbooks, lab coats, cycles, services...">
+        </div>
+      </div>
+      
+      <div class="filter-bar">
+        <!-- Trade Modes tabs -->
+        <div class="trade-tabs" id="trade-tabs-group">
+          <div class="trade-tab active" data-mode="all" id="tab-mode-all">All Trades</div>
+          <div class="trade-tab" data-mode="buy" id="tab-mode-buy">For Sale</div>
+          <div class="trade-tab" data-mode="rent" id="tab-mode-rent">Rentals</div>
+          <div class="trade-tab" data-mode="exchange" id="tab-mode-exchange">Exchanges</div>
+        </div>
+
+        <!-- Sorting and Dropdowns -->
+        <div class="filter-controls">
+          <div class="filter-group">
+            <span class="filter-label">Sort By:</span>
+            <select class="filter-select" id="sort-select">
+              <option value="recent">Latest Listings</option>
+              <option value="views">Most Popular</option>
+              <option value="price-low">Price: Low to High</option>
+              <option value="price-high">Price: High to Low</option>
+            </select>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- Horizontal scroll Category Picker -->
+    <section class="category-picker" id="category-chips-list">
+      <!-- Generated dynamically -->
+    </section>
+
+    <!-- Grid Header -->
+    <div class="feed-header">
+      <h2 class="feed-title" id="grid-title">Available Listings <span id="listings-count">(0)</span></h2>
+    </div>
+
+    <!-- Product Grid -->
+    <section class="product-grid" id="product-grid-container">
+      <!-- Generated dynamically -->
+    </section>
+
+    <!-- Empty/Not Found state -->
+    <div class="empty-state glass" id="empty-state-view" style="display: none;">
+      <div class="empty-icon">🔍</div>
+      <h3 class="empty-title">No listings match your search</h3>
+      <p class="empty-desc">Try clearing your filters or search for something else. Be the first to post this item in your community!</p>
+    </div>
+
+  </main>
+
+  <!-- Safe Meetup Zones Section -->
+  <section class="container safe-zones-section" id="safe-zones">
+    <div class="feed-header" style="margin-bottom: 30px;">
+      <h2 class="feed-title">🔰 Campus Safe Meetup Hubs</h2>
+    </div>
+    
+    <div class="safe-zones-grid">
+      <!-- Left list -->
+      <div class="safe-zones-list" id="safe-zones-list">
+        <!-- Rendered dynamically -->
+      </div>
+      
+      <!-- Right interactive Map simulator -->
+      <div class="map-container glass" id="map-simulator-box">
+        <div class="map-visualizer" id="map-canvas">
+          <!-- Coordinates Rendered dynamically -->
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Product Detail Modal -->
+  <div class="modal-overlay" id="product-detail-modal">
+    <div class="modal-content modal-content-large" id="product-detail-content">
+      <button class="modal-close" id="detail-modal-close" aria-label="Close modal">×</button>
+      
+      <div class="detail-grid">
+        <!-- Image Panel -->
+        <div class="detail-img-panel">
+          <img src="" class="detail-img" id="detail-product-img" alt="Product Image">
+          <div class="card-badge" id="detail-product-badge">For Sale</div>
+        </div>
+        
+        <!-- Info Panel -->
+        <div class="detail-body">
+          <div class="detail-header">
+            <span class="detail-category-tag" id="detail-product-category">Textbook</span>
+            <h2 class="detail-title" id="detail-product-title">Thomas' Calculus Book</h2>
+            
+            <div class="detail-price-line">
+              <div class="detail-price" id="detail-product-price">$25</div>
+              <div class="card-views" id="detail-product-views">👁️ 142 views</div>
+            </div>
+            
+            <div class="detail-exchange-box" id="detail-exchange-req" style="display: none;">
+              🔄 <span>Exchange requested for: Laptop stand</span>
+            </div>
+          </div>
+          
+          <div class="detail-info-row">
+            <div class="detail-info-item">
+              <span class="detail-info-label">Condition</span>
+              <span class="detail-info-val" id="detail-product-condition">Excellent</span>
+            </div>
+            <div class="detail-info-item">
+              <span class="detail-info-label">Listed Date</span>
+              <span class="detail-info-val" id="detail-product-date">May 28, 2026</span>
+            </div>
+          </div>
+          
+          <p class="detail-desc" id="detail-product-desc">
+            Product description details.
+          </p>
+          
+          <!-- Seller profile card -->
+          <div class="seller-detail-card" id="detail-seller-card">
+            <div class="seller-card-header">
+              <img src="" class="seller-detail-avatar" id="detail-seller-avatar" alt="Avatar">
+              <div class="seller-detail-info">
+                <div class="seller-detail-name" id="detail-seller-name">Aarav Mehta</div>
+                <div class="seller-detail-score" id="detail-seller-score">⭐ Trust Score: 98%</div>
+              </div>
+            </div>
+            <div class="seller-badges" id="detail-seller-badges">
+              <!-- Rendered dynamically -->
+            </div>
+          </div>
+          
+          <!-- Actions -->
+          <div class="detail-actions">
+            <button class="btn btn-teal" id="chat-start-btn">💬 Instant Chat with Seller</button>
+            <button class="btn btn-secondary" id="flag-listing-btn">⚠️ Report Listing</button>
+          </div>
+          
+          <!-- Reviews Section -->
+          <div class="reviews-section">
+            <h3 class="reviews-title">
+              Seller Reviews <span style="font-size: 0.95rem; color: var(--text-muted);" id="reviews-summary-count">(1)</span>
+            </h3>
+            
+            <div class="reviews-list" id="detail-reviews-list">
+              <!-- Rendered dynamically -->
+            </div>
+            
+            <!-- Submit Review Form -->
+            <div class="review-form" id="submit-review-form">
+              <h4 style="font-size: 0.95rem; margin-bottom: 8px;">Leave a Trust Review</h4>
+              <div class="rating-select">
+                <span class="form-label" style="font-size: 0.8rem;">Your Rating:</span>
+                <div class="stars-picker" id="review-stars-picker">
+                  <button type="button" class="star-btn active" data-val="1">★</button>
+                  <button type="button" class="star-btn active" data-val="2">★</button>
+                  <button type="button" class="star-btn active" data-val="3">★</button>
+                  <button type="button" class="star-btn active" data-val="4">★</button>
+                  <button type="button" class="star-btn active" data-val="5">★</button>
+                </div>
+              </div>
+              <textarea class="review-textarea" id="review-comment-textarea" placeholder="Describe your experience with this seller (e.g., fast responder, friendly trade, exactly as described)..." required></textarea>
+              <button type="button" class="btn btn-primary" id="submit-review-btn" style="align-self: flex-end; padding: 6px 14px; font-size: 0.8rem;">Submit Review</button>
+            </div>
+          </div>
+          
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Create Listing Modal Wizard -->
+  <div class="modal-overlay" id="create-listing-modal">
+    <div class="modal-content" id="create-listing-content">
+      <button class="modal-close" id="listing-modal-close">×</button>
+      
+      <div style="padding: 30px 30px 10px;">
+        <h2 style="font-size: 1.5rem; text-align: center; margin-bottom: 24px;">Post a New Listing</h2>
+        
+        <!-- Wizard Navigation node steps -->
+        <div class="wizard-steps">
+          <div class="wizard-progress-bar" id="wizard-progress"></div>
+          <div class="step-node active" id="node-step-1">1</div>
+          <div class="step-node" id="node-step-2">2</div>
+          <div class="step-node" id="node-step-3">3</div>
+        </div>
+      </div>
+      
+      <!-- Wizard Step 1: Info -->
+      <div class="wizard-panel active" id="panel-step-1">
+        <div class="form-group">
+          <label class="form-label" for="list-title">Product Title</label>
+          <input type="text" class="form-control" id="list-title" placeholder="e.g., Organic Chem lab coat, TI-84 Plus, Btwin cycle..." required>
+        </div>
+        
+        <div class="form-group">
+          <label class="form-label" for="list-desc">Detailed Description</label>
+          <textarea class="form-control" id="list-desc" style="min-height: 100px; resize: vertical;" placeholder="Provide details like semesters used, textbook condition, size, tags, or meets details..." required></textarea>
+        </div>
+        
+        <div class="form-row">
+          <div class="form-group">
+            <label class="form-label" for="list-category">Category</label>
+            <select class="form-control" id="list-category">
+              <option value="textbooks">Textbooks</option>
+              <option value="electronics">Electronics</option>
+              <option value="transport">Transport</option>
+              <option value="lab-gear">Lab Gear</option>
+              <option value="services">Services</option>
+              <option value="sports">Sports & Outdoors</option>
+            </select>
+          </div>
+          <div class="form-group">
+            <label class="form-label" for="list-condition">Item Condition</label>
+            <select class="form-control" id="list-condition">
+              <option value="Like New">Like New / Unopened</option>
+              <option value="Excellent">Excellent</option>
+              <option value="Good">Good / Standard Used</option>
+              <option value="Fair">Fair / Workable</option>
+              <option value="Professional">Professional Service</option>
+            </select>
+          </div>
+        </div>
+      </div>
+      
+      <!-- Wizard Step 2: Trade & Pricing -->
+      <div class="wizard-panel" id="panel-step-2">
+        <div class="form-group">
+          <label class="form-label">Trade Model</label>
+          <div class="trade-tabs" style="display: flex; margin-bottom: 12px; width: 100%;" id="wizard-trade-tabs">
+            <div class="trade-tab active" style="flex: 1; text-align: center;" data-val="buy">For Sale</div>
+            <div class="trade-tab" style="flex: 1; text-align: center;" data-val="rent">For Rent</div>
+            <div class="trade-tab" style="flex: 1; text-align: center;" data-val="exchange">Exchange / Barter</div>
+          </div>
+        </div>
+        
+        <!-- Sale Price box -->
+        <div class="form-group" id="wizard-group-price">
+          <label class="form-label" for="list-price" id="wizard-price-label">Price ($)</label>
+          <input type="number" class="form-control" id="list-price" placeholder="Enter amount (e.g. 15)" min="0" value="10">
+        </div>
+        
+        <!-- Exchange Requirements box -->
+        <div class="form-group" id="wizard-group-exchange" style="display: none;">
+          <label class="form-label" for="list-exchange">Desired Exchange Item</label>
+          <input type="text" class="form-control" id="list-exchange" placeholder="What would you swap this for? (e.g. Calculus 3 notes)">
+        </div>
+      </div>
+      
+      <!-- Wizard Step 3: Photos -->
+      <div class="wizard-panel" id="panel-step-3">
+        <div class="form-group">
+          <label class="form-label">Item Photos</label>
+          
+          <div class="upload-dropzone" id="wizard-upload-drop">
+            <div class="upload-icon">📷</div>
+            <div class="upload-text">Simulate Photo Upload</div>
+            <div class="upload-subtext">Click here to attach a default community mock photo automatically</div>
+          </div>
+          
+          <!-- Image uploads simulation preview list -->
+          <div class="preview-grid" id="wizard-preview-grid">
+            <!-- Dynamically populated previews -->
+          </div>
+        </div>
+      </div>
+      
+      <!-- Wizard Controls -->
+      <div class="wizard-footer">
+        <button class="btn btn-secondary" id="wizard-prev-btn" style="visibility: hidden;">Previous</button>
+        <button class="btn btn-primary" id="wizard-next-btn">Next Step</button>
+      </div>
+    </div>
+  </div>
+
+  <!-- Sign In / Verification Modal -->
+  <div class="modal-overlay" id="auth-modal">
+    <div class="modal-content" style="max-width: 420px;" id="auth-modal-content">
+      <button class="modal-close" id="auth-modal-close">×</button>
+      
+      <div class="auth-box">
+        <div class="auth-header">
+          <h2 id="auth-title">Verify Community Account</h2>
+          <p id="auth-desc">Sign up using your college credentials for trusted campus trading.</p>
+        </div>
+        
+        <form id="auth-form" onsubmit="event.preventDefault();">
+          <div class="form-group" id="auth-group-name" style="display: none;">
+            <label class="form-label" for="auth-name-input">Full Name</label>
+            <input type="text" class="form-control" id="auth-name-input" placeholder="e.g. Emily Watson">
+          </div>
+          
+          <div class="form-group">
+            <label class="form-label" for="auth-email-input">Community Email Address</label>
+            <input type="email" class="form-control" id="auth-email-input" placeholder="you@university.edu" required>
+            <div class="domain-hint" id="auth-domain-hint">⚠️ Requires email ending in .edu, .edu.in, or .ac.in to unlock trust badge!</div>
+          </div>
+          
+          <div class="form-group">
+            <label class="form-label" for="auth-pass-input">Password</label>
+            <input type="password" class="form-control" id="auth-pass-input" placeholder="••••••••" required>
+          </div>
+          
+          <button type="button" class="btn btn-primary" id="auth-submit-btn" style="width: 100%; margin-top: 14px; padding: 12px;">Sign In</button>
+        </form>
+        
+        <div class="auth-footer" id="auth-footer-toggle">
+          Don't have an account? <span class="auth-toggle" id="auth-toggle-mode">Sign Up</span>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Live Simulated Chat Drawer -->
+  <div class="chat-drawer" id="chat-sidebar-drawer">
+    <div class="chat-header">
+      <div class="chat-seller-block">
+        <img src="" class="seller-avatar" id="chat-seller-avatar" alt="Seller">
+        <div>
+          <div class="chat-title" id="chat-seller-name">Aarav Mehta</div>
+          <div class="chat-subtitle" id="chat-listing-title">TI-84 Graphing Calculator</div>
+        </div>
+      </div>
+      <button class="chat-close" id="chat-drawer-close">×</button>
+    </div>
+    
+    <!-- Chat Bubbles Area -->
+    <div class="chat-body" id="chat-messages-container">
+      <!-- Conversation history dynamically loaded here -->
+    </div>
+    
+    <!-- Typing indicator dots -->
+    <div class="typing-indicator" id="chat-typing-loader">
+      <div class="typing-dot"></div>
+      <div class="typing-dot"></div>
+      <div class="typing-dot"></div>
+    </div>
+    
+    <!-- Chat Input Area -->
+    <div class="chat-footer">
+      <div class="chat-input-wrapper">
+        <input type="text" class="chat-input" id="chat-msg-input" placeholder="Type a message to coordinate trade...">
+        <button class="chat-send-btn" id="chat-send-btn">➔</button>
+      </div>
+    </div>
+  </div>
+
+  <!-- Toast Toast message element -->
+  <div class="toast-msg toast-success" id="toast-message-box">
+    <span class="toast-icon" id="toast-icon">✔️</span>
+    <span id="toast-text">Action completed successfully!</span>
+  </div>
+
+  <!-- Bottom Footer Section -->
+  <footer class="footer">
+    <div class="container">
+      <div class="footer-links">
+        <a href="#" class="footer-link">About CommuniTrade</a>
+        <a href="#" class="footer-link">Safety Guidelines</a>
+        <a href="#" class="footer-link">Environmental Impact</a>
+        <a href="#" class="footer-link">Terms & Conditions</a>
+      </div>
+      <p id="copyright">&copy; 2026 CommuniTrade. "Buy, Sell, Rent, and Connect Within Your Community." Sustainable campus commerce.</p>
+    </div>
+  </footer>
+
+  <!-- Unified JS Script Block -->
+  <script>
+    // --- Mock Data & Configs ---
+    const INITIAL_CATEGORIES = [
+      { id: 'all', name: 'All Items', icon: '✨' },
+      { id: 'textbooks', name: 'Textbooks', icon: '📚' },
+      { id: 'electronics', name: 'Electronics', icon: '💻' },
+      { id: 'transport', name: 'Transport', icon: '🚲' },
+      { id: 'lab-gear', name: 'Lab Gear', icon: '🥽' },
+      { id: 'services', name: 'Services', icon: '🛠️' },
+      { id: 'sports', name: 'Sports & Outdoors', icon: '🏸' }
+    ];
+
+    const MOCK_USERS = [
+      {
+        id: 'user_1',
+        name: 'Aarav Mehta',
+        avatar: 'https://images.unsplash.com/photo-1539571696357-5a69c17a67c6?auto=format&fit=crop&q=80&w=120',
+        email: 'aarav.mehta@university.edu',
+        trustScore: 98,
+        isVerified: true,
+        badges: ['Senior Mentor', 'Top Rated Seller', 'Eco-Warrior'],
+        joinedDate: 'Aug 2024'
+      },
+      {
+        id: 'user_2',
+        name: 'Emily Watson',
+        avatar: 'https://images.unsplash.com/photo-1494790108377-be9c29b29330?auto=format&fit=crop&q=80&w=120',
+        email: 'emily.watson@university.edu',
+        trustScore: 95,
+        isVerified: true,
+        badges: ['Hostel Representative', 'Fast Responder'],
+        joinedDate: 'Oct 2024'
+      },
+      {
+        id: 'user_3',
+        name: 'Devansh Verma',
+        avatar: 'https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?auto=format&fit=crop&q=80&w=120',
+        email: 'devansh.v@university.edu',
+        trustScore: 92,
+        isVerified: true,
+        badges: ['Book Worm'],
+        joinedDate: 'Jan 2025'
+      },
+      {
+        id: 'user_4',
+        name: 'Sarah Chen',
+        avatar: 'https://images.unsplash.com/photo-1517841905240-472988babdf9?auto=format&fit=crop&q=80&w=120',
+        email: 'sarah.chen@university.edu',
+        trustScore: 99,
+        isVerified: true,
+        badges: ['Lab Assistant', 'Reliable Peer'],
+        joinedDate: 'Sep 2024'
+      }
+    ];
+
+    const INITIAL_LISTINGS = [
+      {
+        id: 'prod_1',
+        title: "Thomas' Calculus (14th Global Edition)",
+        description: "Used for 1st and 2nd Semester engineering courses. Excellent condition, very minimal pencil markings in the first chapter only. Rest is completely clean. Includes the unopened online access code card!",
+        price: 25,
+        category: 'textbooks',
+        tradeMode: 'buy',
+        exchangeFor: '',
+        image: 'https://images.unsplash.com/photo-1543002588-bfa74002ed7e?auto=format&fit=crop&q=80&w=600',
+        sellerId: 'user_3',
+        views: 142,
+        dateAdded: '2026-05-28',
+        status: 'available',
+        condition: 'Excellent',
+        reviews: [
+          { id: 'rev_11', reviewerName: 'Rohan Gupta', rating: 5, comment: 'Book was exactly in the condition described, super helpful seller!', date: '2026-05-29' }
+        ]
+      },
+      {
+        id: 'prod_2',
+        title: 'Texas Instruments TI-84 Plus CE',
+        description: 'Graphing Calculator required for all advanced calculus, linear algebra, and physics sessions. Battery holds charge for weeks. Comes with charging cable and protective slipcase.',
+        price: 45,
+        category: 'electronics',
+        tradeMode: 'buy',
+        exchangeFor: '',
+        image: 'https://images.unsplash.com/photo-1610824352934-c10d8706f35b?auto=format&fit=crop&q=80&w=600',
+        sellerId: 'user_1',
+        views: 89,
+        dateAdded: '2026-05-29',
+        status: 'available',
+        condition: 'Like New',
+        reviews: []
+      },
+      {
+        id: 'prod_3',
+        title: 'Decathlon Rockrider Mountain Bike',
+        description: 'Hostel residents, perfect for campus commutes and weekend trail riding. Has 21-speed Shimano gears, comfortable gel seat cover, strong front suspension. Safe locks and dynamic front/rear lights included.',
+        price: 3,
+        category: 'transport',
+        tradeMode: 'rent',
+        exchangeFor: '',
+        image: 'https://images.unsplash.com/photo-1485965120184-e220f721d03e?auto=format&fit=crop&q=80&w=600',
+        sellerId: 'user_2',
+        views: 215,
+        dateAdded: '2026-05-25',
+        status: 'available',
+        condition: 'Very Good',
+        reviews: [
+          { id: 'rev_31', reviewerName: 'Kabir Sen', rating: 4, comment: 'Rented for 3 days. Tyres were fully inflated and brakes are sharp. Highly recommended!', date: '2026-05-27' }
+        ]
+      },
+      {
+        id: 'prod_4',
+        title: 'Premium Chemistry Lab Coat & Goggles',
+        description: 'Medium size cotton white lab coat and chemical splash goggles. Essential for freshman chemistry labs. Swap with anyone who has organic chemistry study material or semester guides!',
+        price: 0,
+        category: 'lab-gear',
+        tradeMode: 'exchange',
+        exchangeFor: 'Organic Chemistry Semester 3 guide/notes',
+        image: 'https://images.unsplash.com/photo-1576086213369-97a306d36557?auto=format&fit=crop&q=80&w=600',
+        sellerId: 'user_4',
+        views: 64,
+        dateAdded: '2026-05-27',
+        status: 'available',
+        condition: 'Good',
+        reviews: []
+      },
+      {
+        id: 'prod_5',
+        title: 'React.js & Node.js Crash Course Prep',
+        description: 'Need help with web dev labs or semester project? I am a 4th-year CS student offering 1-on-1 tutoring. Can help you understand building full-stack applications, routing, REST APIs, and state systems.',
+        price: 15,
+        category: 'services',
+        tradeMode: 'buy',
+        exchangeFor: '',
+        image: 'https://images.unsplash.com/photo-1515378791036-0648a3ef77b2?auto=format&fit=crop&q=80&w=600',
+        sellerId: 'user_1',
+        views: 110,
+        dateAdded: '2026-05-26',
+        status: 'available',
+        condition: 'Professional',
+        reviews: [
+          { id: 'rev_51', reviewerName: 'Alisha Khan', rating: 5, comment: 'Aarav is an awesome tutor! He explained React Hooks so clearly that I aced my lab assignment.', date: '2026-05-28' }
+        ]
+      },
+      {
+        id: 'prod_6',
+        title: 'Wilson US Open Tennis Racket',
+        description: 'Graphite construction, standard adult grip size 3. Selling or exchanging for a decent pair of badminton rackets. Plays great, strings have excellent tension.',
+        price: 0,
+        category: 'sports',
+        tradeMode: 'exchange',
+        exchangeFor: 'Yonex/Li-Ning Badminton Rackets',
+        image: 'https://images.unsplash.com/photo-1622279457486-62dcc4a4efb3?auto=format&fit=crop&q=80&w=600',
+        sellerId: 'user_2',
+        views: 43,
+        dateAdded: '2026-05-30',
+        status: 'available',
+        condition: 'Good',
+        reviews: []
+      }
+    ];
+
+    const SAFE_MEET_ZONES = [
+      {
+        id: 'zone_1',
+        name: 'Central Library Lounge',
+        description: 'Monitored by campus security, quiet indoor environment, excellent lighting. Perfect for books & gadgets.',
+        safetyRating: 5
+      },
+      {
+        id: 'zone_2',
+        name: 'Main Quadrangle Cafeteria',
+        description: 'High foot-traffic, wide open space, cameras present. Great during college hours (9 AM - 5 PM).',
+        safetyRating: 5
+      },
+      {
+        id: 'zone_3',
+        name: 'Hostel Block A Lobby',
+        description: 'Perfect for quick exchanges between hostellers. Fully secure gate guard access.',
+        safetyRating: 4.8
+      },
+      {
+        id: 'zone_4',
+        name: 'Sports Complex Main Gates',
+        description: 'Best for outdoor equipment, cycles, or larger items. Highly active, wide driveway.',
+        safetyRating: 4.5
+      }
+    ];
+
+    const MOCK_CHATS = {
+      'prod_1': {
+        responses: [
+          "Hi! Yes, the calculus textbook is still available. It's in great condition, almost brand new.",
+          "Sure, I can do that! How about we meet at the Central Library Lounge tomorrow around 1:00 PM during lunch?",
+          "Perfect! You can pay me via cash or digital transfer when you see the book. See you there!"
+        ],
+        triggers: [
+          /hello|hi|hey|is this available|still available/i,
+          /meet|where|time|when|place/i,
+          /ok|perfect|awesome|deal|sounds good/i
+        ]
+      },
+      'prod_2': {
+        responses: [
+          "Hey! Yes, the TI-84 calculator is available. I just charged it fully yesterday.",
+          "Yes, the price of $45 is slightly negotiable if you can meet up today. What is your offer?",
+          "That works for me! Let's meet at the Quadrangle Cafeteria around 4:00 PM. Does that time suit you?"
+        ],
+        triggers: [
+          /hi|hello|available|calculator|still have/i,
+          /negotiable|price|discount|cheaper|offer/i,
+          /meet|quad|cafeteria|agree|sounds good/i
+        ]
+      },
+      'prod_3': {
+        responses: [
+          "Hello! Yes, the Btwin Rockrider is available for rent. How many days do you need it for?",
+          "That will be $3 per day, so $9 for 3 days. I will require a quick verification of your student ID.",
+          "Perfect. I am at Hostel Block B. Let me know when you arrive at the cycle stand nearby!"
+        ],
+        triggers: [
+          /rent|available|bike|cycle|days/i,
+          /price|cost|charge|id|verification/i,
+          / hostel|block b|meet|coming|arriving/i
+        ]
+      },
+      'prod_4': {
+        responses: [
+          "Hey! Yes, I still have the lab coat and goggles.",
+          "I am looking for Semester 3 organic chem guides or notes in exchange. Do you have any of those?",
+          "That's fantastic! Let's meet at the Lab Block lobby tomorrow morning at 10 AM to swap."
+        ],
+        triggers: [
+          /coat|goggles|available|swap|exchange/i,
+          /notes|guide|semester|organic/i,
+          /deal|meet|lobby|swap|tomorrow/i
+        ]
+      },
+      'prod_5': {
+        responses: [
+          "Hi! Thanks for reaching out. Yes, I still have slots open for tutoring this week.",
+          "I specialize in HTML/CSS/JS, React, Node, and Express database layouts. What are you working on?",
+          "Sure! Let's set up a quick 1-hour session. I can meet you at the library cafe to get started."
+        ],
+        triggers: [
+          /tutor|help|react|node|class|learn/i,
+          /what|topics|teach|syllabus/i,
+          /session|hour|schedule|meet|start/i
+        ]
+      },
+      'prod_6': {
+        responses: [
+          "Hey! The tennis racket is in good condition.",
+          "Yes, I want to exchange it for a decent badminton racket set. What brand do you have?",
+          "Sounds like a fair deal. We can meet at the Sports Complex gates tomorrow at 5 PM."
+        ],
+        triggers: [
+          /tennis|racket|available|condition/i,
+          /badminton|brand|swap|exchange/i,
+          /sports|complex|meet|tomorrow|deal/i
+        ]
+      },
+      'default': {
+        responses: [
+          "Hello there! Thanks for your message. Yes, that is available.",
+          "Let's coordinate a quick meeting at the Library Lounge or Campus Quad. What time works best?",
+          "Sounds like a plan! Looking forward to meeting up."
+        ],
+        triggers: [
+          /hello|hi|hey|available/i,
+          /meet|where|time|coordinate/i,
+          /deal|ok|agree|great/i
+        ]
+      }
+    };
+
+    // --- State Management ---
+    let state = {
+      listings: JSON.parse(localStorage.getItem('ct_listings')) || INITIAL_LISTINGS,
+      users: JSON.parse(localStorage.getItem('ct_users')) || MOCK_USERS,
+      currentUser: JSON.parse(localStorage.getItem('ct_currentUser')) || null,
+      activeFilters: {
+        category: 'all',
+        tradeMode: 'all',
+        search: '',
+        sort: 'recent'
+      },
+      selectedListing: null,
+      chatSession: {
+        activeListingId: null,
+        messages: []
+      },
+      wizard: {
+        step: 1,
+        title: '',
+        desc: '',
+        category: 'textbooks',
+        condition: 'Excellent',
+        tradeMode: 'buy',
+        price: 10,
+        exchangeFor: '',
+        images: []
+      },
+      activeSafeZoneId: 'zone_1'
+    };
+
+    // Preset images
+    const MOCK_CATEGORY_IMAGES = {
+      textbooks: [
+        'https://images.unsplash.com/photo-1544947950-fa07a98d237f?auto=format&fit=crop&q=80&w=400',
+        'https://images.unsplash.com/photo-1497633762265-9d179a990aa6?auto=format&fit=crop&q=80&w=400'
+      ],
+      electronics: [
+        'https://images.unsplash.com/photo-1542751371-adc38448a05e?auto=format&fit=crop&q=80&w=400',
+        'https://images.unsplash.com/photo-1588872657578-7efd1f1555ed?auto=format&fit=crop&q=80&w=400'
+      ],
+      transport: [
+        'https://images.unsplash.com/photo-1485965120184-e220f721d03e?auto=format&fit=crop&q=80&w=400',
+        'https://images.unsplash.com/photo-1532298229144-0ec0c57515c7?auto=format&fit=crop&q=80&w=400'
+      ],
+      'lab-gear': [
+        'https://images.unsplash.com/photo-1576086213369-97a306d36557?auto=format&fit=crop&q=80&w=400',
+        'https://images.unsplash.com/photo-1582719478250-c89cae4dc85b?auto=format&fit=crop&q=80&w=400'
+      ],
+      services: [
+        'https://images.unsplash.com/photo-1434030216411-0b793f4b4173?auto=format&fit=crop&q=80&w=400',
+        'https://images.unsplash.com/photo-1522202176988-66273c2fd55f?auto=format&fit=crop&q=80&w=400'
+      ],
+      sports: [
+        'https://images.unsplash.com/photo-1541252260730-0412e8e2108e?auto=format&fit=crop&q=80&w=400',
+        'https://images.unsplash.com/photo-1617203442284-88406248d48b?auto=format&fit=crop&q=80&w=400'
+      ]
+    };
+
+    function saveState() {
+      localStorage.setItem('ct_listings', JSON.stringify(state.listings));
+      localStorage.setItem('ct_users', JSON.stringify(state.users));
+      localStorage.setItem('ct_currentUser', JSON.stringify(state.currentUser));
+    }
+
+    function showToast(text, type = 'success') {
+      const toast = document.getElementById('toast-message-box');
+      const toastText = document.getElementById('toast-text');
+      const toastIcon = document.getElementById('toast-icon');
+      
+      toastText.innerText = text;
+      toastIcon.innerText = type === 'success' ? '✔️' : 'ℹ️';
+      
+      toast.className = `toast-msg toast-${type} show`;
+      
+      setTimeout(() => {
+        toast.className = `toast-msg toast-${type}`;
+      }, 3500);
+    }
+
+    // --- DOM Rendering Engine ---
+
+    function renderNavbarAuth() {
+      const authContainer = document.getElementById('auth-nav-container');
+      if (state.currentUser) {
+        const isVerifiedDomain = verifyEmailDomain(state.currentUser.email);
+        authContainer.innerHTML = `
+          <div class="user-profile-badge" id="profile-badge-dropdown">
+            <img src="${state.currentUser.avatar || 'https://images.unsplash.com/photo-1535713875002-d1d0cf377fde?auto=format&fit=crop&q=80&w=120'}" class="user-avatar" alt="${state.currentUser.name}">
+            <div class="seller-info">
+              <span class="user-name">${state.currentUser.name}</span>
+              <span class="seller-trust" style="font-size:0.7rem; color: ${isVerifiedDomain ? 'var(--secondary)' : 'var(--text-muted)'}">
+                ${isVerifiedDomain ? '🛡️ Verified Trusted' : '👤 Student Member'}
+              </span>
+            </div>
+            <button class="btn btn-secondary" style="padding: 4px 10px; font-size: 0.75rem; margin-left: 8px;" id="nav-logout-btn">Log Out</button>
+          </div>
+        `;
+        
+        document.getElementById('nav-logout-btn').addEventListener('click', (e) => {
+          e.stopPropagation();
+          state.currentUser = null;
+          saveState();
+          renderNavbarAuth();
+          showToast('Logged out successfully', 'info');
+        });
+      } else {
+        authContainer.innerHTML = `
+          <button class="btn btn-primary" id="login-trigger-btn">Sign In</button>
+        `;
+        document.getElementById('login-trigger-btn').addEventListener('click', () => {
+          openAuthModal('signin');
+        });
+      }
+    }
+
+    function renderCategoryChips() {
+      const container = document.getElementById('category-chips-list');
+      container.innerHTML = INITIAL_CATEGORIES.map(cat => `
+        <button class="category-chip ${state.activeFilters.category === cat.id ? 'active' : ''}" data-category-id="${cat.id}">
+          <span>${cat.icon}</span> ${cat.name}
+        </button>
+      `).join('');
+
+      container.querySelectorAll('.category-chip').forEach(chip => {
+        chip.addEventListener('click', () => {
+          state.activeFilters.category = chip.getAttribute('data-category-id');
+          renderCategoryChips();
+          renderListingsGrid();
+        });
+      });
+    }
+
+    function renderListingsGrid() {
+      const container = document.getElementById('product-grid-container');
+      const emptyState = document.getElementById('empty-state-view');
+      
+      let filtered = state.listings.filter(item => {
+        if (state.activeFilters.category !== 'all' && item.category !== state.activeFilters.category) return false;
+        if (state.activeFilters.tradeMode !== 'all' && item.tradeMode !== state.activeFilters.tradeMode) return false;
+        if (state.activeFilters.search) {
+          const q = state.activeFilters.search.toLowerCase();
+          const matchTitle = item.title.toLowerCase().includes(q);
+          const matchDesc = item.description.toLowerCase().includes(q);
+          if (!matchTitle && !matchDesc) return false;
+        }
+        return item.status === 'available';
+      });
+
+      if (state.activeFilters.sort === 'recent') {
+        filtered.sort((a, b) => new Date(b.dateAdded) - new Date(a.dateAdded));
+      } else if (state.activeFilters.sort === 'views') {
+        filtered.sort((a, b) => b.views - a.views);
+      } else if (state.activeFilters.sort === 'price-low') {
+        filtered.sort((a, b) => a.price - b.price);
+      } else if (state.activeFilters.sort === 'price-high') {
+        filtered.sort((a, b) => b.price - a.price);
+      }
+
+      document.getElementById('listings-count').innerText = `(${filtered.length})`;
+
+      if (filtered.length === 0) {
+        container.style.display = 'none';
+        emptyState.style.display = 'block';
+      } else {
+        container.style.display = 'grid';
+        emptyState.style.display = 'none';
+        
+        container.innerHTML = filtered.map(item => {
+          const seller = state.users.find(u => u.id === item.sellerId) || MOCK_USERS[0];
+          const timeAgo = getTimeAgo(item.dateAdded);
+          
+          let priceText = `$${item.price}`;
+          if (item.tradeMode === 'rent') priceText = `$${item.price}<span>/day</span>`;
+          if (item.tradeMode === 'exchange') priceText = `<span class="card-exchange-text" title="${item.exchangeFor}">🔄 swap</span>`;
+          
+          return `
+            <div class="glass-card product-card" data-listing-id="${item.id}">
+              <div class="card-img-wrapper">
+                <img src="${item.image}" class="card-img" alt="${item.title}" loading="lazy">
+                <div class="card-badge badge-${item.tradeMode}">${item.tradeMode}</div>
+                <div class="card-views">👁️ ${item.views}</div>
+              </div>
+              
+              <div class="card-body">
+                <div class="card-meta">
+                  <span>${INITIAL_CATEGORIES.find(c => c.id === item.category)?.name || item.category}</span>
+                  <span>${timeAgo}</span>
+                </div>
+                
+                <h3 class="card-title">${item.title}</h3>
+                <p class="card-desc">${item.description}</p>
+                
+                <div class="card-footer">
+                  <div class="card-price">${priceText}</div>
+                  
+                  <div class="seller-indicator">
+                    <img src="${seller.avatar}" class="seller-avatar" alt="${seller.name}">
+                    <div class="seller-info">
+                      <span class="seller-name">${seller.name}</span>
+                      <span class="seller-trust">⭐ ${seller.trustScore}% Trust</span>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          `;
+        }).join('');
+
+        container.querySelectorAll('.product-card').forEach(card => {
+          card.addEventListener('click', () => {
+            const id = card.getAttribute('data-listing-id');
+            openProductDetail(id);
+          });
+        });
+      }
+    }
+
+    function renderSafeZones() {
+      const listContainer = document.getElementById('safe-zones-list');
+      const canvasContainer = document.getElementById('map-canvas');
+      
+      const pinCoordinates = {
+        'zone_1': { x: 30, y: 35, icon: '📚' },
+        'zone_2': { x: 75, y: 25, icon: '🍔' },
+        'zone_3': { x: 20, y: 70, icon: '🏢' },
+        'zone_4': { x: 65, y: 75, icon: '🚲' }
+      };
+
+      listContainer.innerHTML = SAFE_MEET_ZONES.map(zone => `
+        <div class="zone-card ${state.activeSafeZoneId === zone.id ? 'active' : ''}" data-zone-id="${zone.id}">
+          <div class="zone-header">
+            <h3 class="zone-name">${zone.name}</h3>
+            <span class="zone-rating">🛡️ Safety Rating: ${zone.safetyRating}/5</span>
+          </div>
+          <p class="zone-desc">${zone.description}</p>
+        </div>
+      `).join('');
+
+      let pinsHTML = `
+        <div style="position: absolute; top: 15%; left: 45%; color: rgba(255,255,255,0.03); font-size: 3rem; font-weight: 800; font-family: 'Outfit'; pointer-events:none;">CAMPUS MAP</div>
+        <div class="map-pin" style="top: 50%; left: 45%; z-index: 4;">
+          <span class="pin-icon" style="font-size: 1.5rem; filter: hue-rotate(120deg)">📍</span>
+          <span class="pin-label" style="background: var(--secondary); border-color: var(--secondary); color: white;">You (Hostel Stand)</span>
+        </div>
+      `;
+      
+      SAFE_MEET_ZONES.forEach(zone => {
+        const coords = pinCoordinates[zone.id];
+        const isActive = state.activeSafeZoneId === zone.id;
+        pinsHTML += `
+          <div class="map-pin ${isActive ? 'active' : ''}" style="top: ${coords.y}%; left: ${coords.x}%;" data-pin-id="${zone.id}">
+            <span class="pin-icon">${coords.icon}</span>
+            <span class="pin-label">${zone.name}</span>
+          </div>
+        `;
+      });
+
+      const activeCoords = pinCoordinates[state.activeSafeZoneId];
+      const activeColor = state.activeSafeZoneId === 'zone_4' ? 'var(--accent)' : 'var(--primary)';
+      pinsHTML += `
+        <svg class="map-route-layer">
+          <line x1="45%" y1="50%" x2="${activeCoords.x}%" y2="${activeCoords.y}%" 
+                style="stroke: ${activeColor}; stroke-width: 3; stroke-dasharray: 6 4; opacity: 0.65; transition: all 0.5s ease;" />
+        </svg>
+      `;
+      
+      canvasContainer.innerHTML = pinsHTML;
+
+      listContainer.querySelectorAll('.zone-card').forEach(card => {
+        card.addEventListener('click', () => {
+          state.activeSafeZoneId = card.getAttribute('data-zone-id');
+          renderSafeZones();
+        });
+      });
+
+      canvasContainer.querySelectorAll('.map-pin').forEach(pin => {
+        pin.addEventListener('click', () => {
+          const pinId = pin.getAttribute('data-pin-id');
+          if (pinId) {
+            state.activeSafeZoneId = pinId;
+            renderSafeZones();
+          }
+        });
+      });
+    }
+
+    // --- Product Details Drawer ---
+
+    function openProductDetail(listingId) {
+      const listing = state.listings.find(item => item.id === listingId);
+      if (!listing) return;
+      
+      state.selectedListing = listing;
+      listing.views += 1;
+      saveState();
+      renderListingsGrid();
+
+      const seller = state.users.find(u => u.id === listing.sellerId) || MOCK_USERS[0];
+      
+      document.getElementById('detail-product-img').src = listing.image;
+      document.getElementById('detail-product-category').innerText = INITIAL_CATEGORIES.find(c => c.id === listing.category)?.name || listing.category;
+      document.getElementById('detail-product-title').innerText = listing.title;
+      document.getElementById('detail-product-views').innerText = `👁️ ${listing.views} views`;
+      document.getElementById('detail-product-condition').innerText = listing.condition;
+      document.getElementById('detail-product-date').innerText = new Date(listing.dateAdded).toLocaleDateString('en-US', { month: 'short', day: 'numeric', year: 'numeric' });
+      document.getElementById('detail-product-desc').innerText = listing.description;
+      
+      const badge = document.getElementById('detail-product-badge');
+      badge.className = `card-badge badge-${listing.tradeMode}`;
+      badge.innerText = listing.tradeMode;
+      
+      const exchangeBox = document.getElementById('detail-exchange-req');
+      const priceDisplay = document.getElementById('detail-product-price');
+      
+      if (listing.tradeMode === 'exchange') {
+        exchangeBox.style.display = 'flex';
+        exchangeBox.querySelector('span').innerText = `Swap Target: "${listing.exchangeFor}"`;
+        priceDisplay.innerHTML = '🔄 Barter Trade';
+      } else {
+        exchangeBox.style.display = 'none';
+        priceDisplay.innerHTML = listing.tradeMode === 'rent' ? `$${listing.price}<span>/day</span>` : `$${listing.price}`;
+      }
+
+      document.getElementById('detail-seller-avatar').src = seller.avatar;
+      document.getElementById('detail-seller-name').innerText = seller.name;
+      document.getElementById('detail-seller-score').innerText = `⭐ Trust Rating: ${seller.trustScore}%`;
+      
+      const badgesList = document.getElementById('detail-seller-badges');
+      badgesList.innerHTML = seller.badges.map(b => `<span class="seller-badge">${b}</span>`).join('');
+
+      renderReviewsList(listing);
+
+      const modal = document.getElementById('product-detail-modal');
+      modal.classList.add('active');
+
+      let selectedReviewRating = 5;
+      const starsPicker = document.getElementById('review-stars-picker');
+      
+      function updateStarsUI(val) {
+        selectedReviewRating = val;
+        starsPicker.querySelectorAll('.star-btn').forEach(btn => {
+          const btnVal = parseInt(btn.getAttribute('data-val'));
+          btn.className = btnVal <= val ? 'star-btn active' : 'star-btn';
+        });
+      }
+
+      starsPicker.querySelectorAll('.star-btn').forEach(btn => {
+        btn.onclick = () => {
+          updateStarsUI(parseInt(btn.getAttribute('data-val')));
+        };
+      });
+
+      const submitReviewBtn = document.getElementById('submit-review-btn');
+      const commentInput = document.getElementById('review-comment-textarea');
+      
+      commentInput.value = '';
+      updateStarsUI(5);
+
+      submitReviewBtn.onclick = () => {
+        const text = commentInput.value.trim();
+        if (!text) {
+          showToast('Please type a review comment first!', 'info');
+          return;
+        }
+        
+        const newRev = {
+          id: `rev_${Date.now()}`,
+          reviewerName: state.currentUser ? state.currentUser.name : 'Anonymous Peer',
+          rating: selectedReviewRating,
+          comment: text,
+          date: new Date().toISOString().split('T')[0]
+        };
+        
+        listing.reviews.push(newRev);
+        
+        const baseScore = seller.trustScore;
+        const diff = selectedReviewRating >= 4 ? 1 : -2;
+        seller.trustScore = Math.max(70, Math.min(100, baseScore + diff));
+        
+        saveState();
+        renderReviewsList(listing);
+        renderListingsGrid();
+        
+        commentInput.value = '';
+        document.getElementById('detail-seller-score').innerText = `⭐ Trust Rating: ${seller.trustScore}%`;
+        showToast('Trust rating review posted successfully!', 'success');
+      };
+
+      const chatStartBtn = document.getElementById('chat-start-btn');
+      chatStartBtn.onclick = () => {
+        modal.classList.remove('active');
+        openChatSimulator(listing.id);
+      };
+      
+      document.getElementById('flag-listing-btn').onclick = () => {
+        showToast('Listing reported to community moderation council.', 'info');
+      };
+    }
+
+    function renderReviewsList(listing) {
+      const container = document.getElementById('detail-reviews-list');
+      const summaryCount = document.getElementById('reviews-summary-count');
+      
+      summaryCount.innerText = `(${listing.reviews.length})`;
+
+      if (listing.reviews.length === 0) {
+        container.innerHTML = `<div style="text-align:center; padding:20px; font-size:0.85rem; color:var(--text-muted)">No peer reviews listed yet. Deal in safe hubs to earn ratings.</div>`;
+      } else {
+        container.innerHTML = listing.reviews.map(rev => `
+          <div class="review-item">
+            <div class="review-header">
+              <span class="reviewer-name">${rev.reviewerName}</span>
+              <span class="review-rating">${'★'.repeat(rev.rating)}${'☆'.repeat(5 - rev.rating)}</span>
+            </div>
+            <p class="review-comment">${rev.comment}</p>
+            <div class="review-date">${new Date(rev.date).toLocaleDateString('en-US', { month: 'short', day: 'numeric', year: 'numeric' })}</div>
+          </div>
+        `).join('');
+      }
+    }
+
+    // --- Live Chat Simulator Engine ---
+
+    function openChatSimulator(listingId) {
+      const listing = state.listings.find(item => item.id === listingId);
+      if (!listing) return;
+
+      const seller = state.users.find(u => u.id === listing.sellerId) || MOCK_USERS[0];
+      state.chatSession.activeListingId = listingId;
+
+      document.getElementById('chat-seller-avatar').src = seller.avatar;
+      document.getElementById('chat-seller-name').innerText = seller.name;
+      document.getElementById('chat-listing-title').innerText = `${listing.title} • $${listing.price || listing.exchangeFor}`;
+
+      const chatSessionKey = `chat_session_${listingId}`;
+      state.chatSession.messages = JSON.parse(sessionStorage.getItem(chatSessionKey)) || [];
+
+      if (state.chatSession.messages.length === 0) {
+        state.chatSession.messages.push({
+          sender: 'seller',
+          text: `Hey! Thanks for expressing interest in "${listing.title}". Let me know if you have any questions or want to coordinate a meetup!`,
+          time: getCurrentTime()
+        });
+        sessionStorage.setItem(chatSessionKey, JSON.stringify(state.chatSession.messages));
+      }
+
+      renderChatMessages();
+      document.getElementById('chat-sidebar-drawer').classList.add('active');
+    }
+
+    function renderChatMessages() {
+      const container = document.getElementById('chat-messages-container');
+      const listing = state.listings.find(item => item.id === state.chatSession.activeListingId);
+      const seller = state.users.find(u => u.id === listing?.sellerId) || MOCK_USERS[0];
+      
+      container.innerHTML = `
+        <div class="chat-date-divider">Today</div>
+      ` + state.chatSession.messages.map(msg => {
+        const avatar = msg.sender === 'me' 
+          ? (state.currentUser?.avatar || 'https://images.unsplash.com/photo-1535713875002-d1d0cf377fde?auto=format&fit=crop&q=80&w=120')
+          : seller.avatar;
+        
+        return `
+          <div class="msg-wrapper ${msg.sender === 'received' || msg.sender === 'seller' ? 'received' : 'sent'}">
+            <img src="${avatar}" class="msg-avatar" alt="Avatar">
+            <div class="msg-bubble">
+              <div>${msg.text}</div>
+              <div class="msg-time">${msg.time}</div>
+            </div>
+          </div>
+        `;
+      }).join('');
+
+      container.scrollTop = container.scrollHeight;
+    }
+
+    function handleSendMessage() {
+      const input = document.getElementById('chat-msg-input');
+      const text = input.value.trim();
+      if (!text) return;
+
+      const userMsg = {
+        sender: 'me',
+        text: text,
+        time: getCurrentTime()
+      };
+
+      state.chatSession.messages.push(userMsg);
+      renderChatMessages();
+      input.value = '';
+
+      const listingId = state.chatSession.activeListingId;
+      const chatSessionKey = `chat_session_${listingId}`;
+      sessionStorage.setItem(chatSessionKey, JSON.stringify(state.chatSession.messages));
+
+      const itemConfig = MOCK_CHATS[listingId] || MOCK_CHATS['default'];
+      let replyIndex = 0;
+
+      const sentCount = state.chatSession.messages.filter(m => m.sender === 'me').length;
+      
+      if (sentCount === 1) replyIndex = 0;
+      else if (sentCount === 2) replyIndex = 1;
+      else replyIndex = 2;
+
+      itemConfig.triggers.forEach((regex, idx) => {
+        if (regex.test(text)) {
+          replyIndex = idx;
+        }
+      });
+
+      const replyText = itemConfig.responses[replyIndex] || "Sounds good! Let's meet up at the Library Cafe tomorrow.";
+
+      const typingLoader = document.getElementById('chat-typing-loader');
+      const chatBody = document.getElementById('chat-messages-container');
+
+      setTimeout(() => {
+        typingLoader.style.display = 'flex';
+        chatBody.scrollTop = chatBody.scrollHeight;
+      }, 600);
+
+      setTimeout(() => {
+        typingLoader.style.display = 'none';
+        
+        state.chatSession.messages.push({
+          sender: 'seller',
+          text: replyText,
+          time: getCurrentTime()
+        });
+
+        sessionStorage.setItem(chatSessionKey, JSON.stringify(state.chatSession.messages));
+        renderChatMessages();
+      }, 2200);
+    }
+
+    // --- Create Listing Wizard Form Engine ---
+
+    function openListingWizard() {
+      if (!state.currentUser) {
+        showToast('Please sign in to list items in your community!', 'info');
+        openAuthModal('signup');
+        return;
+      }
+
+      state.wizard = {
+        step: 1,
+        title: '',
+        desc: '',
+        category: 'textbooks',
+        condition: 'Excellent',
+        tradeMode: 'buy',
+        price: 10,
+        exchangeFor: '',
+        images: []
+      };
+
+      updateWizardStepUI();
+      document.getElementById('create-listing-modal').classList.add('active');
+    }
+
+    function updateWizardStepUI() {
+      const step = state.wizard.step;
+      const progress = document.getElementById('wizard-progress');
+      const nextBtn = document.getElementById('wizard-next-btn');
+      const prevBtn = document.getElementById('wizard-prev-btn');
+
+      progress.style.width = `${((step - 1) / 2) * 100}%`;
+
+      for (let i = 1; i <= 3; i++) {
+        const node = document.getElementById(`node-step-${i}`);
+        const panel = document.getElementById(`panel-step-${i}`);
+        
+        if (i < step) {
+          node.className = 'step-node completed';
+          panel.className = 'wizard-panel';
+        } else if (i === step) {
+          node.className = 'step-node active';
+          panel.className = 'wizard-panel active';
+        } else {
+          node.className = 'step-node';
+          panel.className = 'wizard-panel';
+        }
+      }
+
+      prevBtn.style.visibility = step === 1 ? 'hidden' : 'visible';
+      nextBtn.innerText = step === 3 ? 'Publish Listing' : 'Next Step';
+    }
+
+    function handleWizardNext() {
+      const step = state.wizard.step;
+
+      if (step === 1) {
+        const title = document.getElementById('list-title').value.trim();
+        const desc = document.getElementById('list-desc').value.trim();
+        if (!title || !desc) {
+          showToast('Please fill in both title and description details.', 'info');
+          return;
+        }
+        
+        state.wizard.title = title;
+        state.wizard.desc = desc;
+        state.wizard.category = document.getElementById('list-category').value;
+        state.wizard.condition = document.getElementById('list-condition').value;
+        
+        state.wizard.step = 2;
+        updateWizardStepUI();
+      } 
+      else if (step === 2) {
+        const priceInput = document.getElementById('list-price');
+        const exchangeInput = document.getElementById('list-exchange');
+        
+        if (state.wizard.tradeMode === 'exchange') {
+          const exchangeVal = exchangeInput.value.trim();
+          if (!exchangeVal) {
+            showToast('Please specify the barter item you wish to swap with!', 'info');
+            return;
+          }
+          state.wizard.exchangeFor = exchangeVal;
+          state.wizard.price = 0;
+        } else {
+          const priceVal = parseFloat(priceInput.value);
+          if (isNaN(priceVal) || priceVal < 0) {
+            showToast('Please provide a valid price amount.', 'info');
+            return;
+          }
+          state.wizard.price = priceVal;
+          state.wizard.exchangeFor = '';
+        }
+
+        state.wizard.step = 3;
+        updateWizardStepUI();
+        renderWizardPreviewGrid();
+      } 
+      else if (step === 3) {
+        if (state.wizard.images.length === 0) {
+          const presets = MOCK_CATEGORY_IMAGES[state.wizard.category] || MOCK_CATEGORY_IMAGES.textbooks;
+          state.wizard.images.push(presets[Math.floor(Math.random() * presets.length)]);
+        }
+
+        const newListing = {
+          id: `prod_${Date.now()}`,
+          title: state.wizard.title,
+          description: state.wizard.desc,
+          category: state.wizard.category,
+          condition: state.wizard.condition,
+          tradeMode: state.wizard.tradeMode,
+          price: state.wizard.price,
+          exchangeFor: state.wizard.exchangeFor,
+          image: state.wizard.images[0],
+          sellerId: state.currentUser.id,
+          views: 1,
+          dateAdded: new Date().toISOString().split('T')[0],
+          status: 'available',
+          reviews: []
+        };
+
+        state.listings.unshift(newListing);
+        saveState();
+        
+        const transVal = document.getElementById('stat-trans-val');
+        const transCount = parseInt(transVal.innerText.replace('+', '')) || 1180;
+        transVal.innerHTML = `${transCount + 1}<span>+</span>`;
+
+        if (newListing.tradeMode === 'rent') {
+          const rentVal = document.getElementById('stat-rent-val');
+          const rentCount = parseInt(rentVal.innerText) || 42;
+          rentVal.innerText = rentCount + 1;
+        }
+        
+        renderListingsGrid();
+        document.getElementById('create-listing-modal').classList.remove('active');
+        resetWizardInputs();
+        showToast('Your item has been listed inside the community!', 'success');
+      }
+    }
+
+    function resetWizardInputs() {
+      document.getElementById('list-title').value = '';
+      document.getElementById('list-desc').value = '';
+      document.getElementById('list-exchange').value = '';
+      document.getElementById('list-price').value = '10';
+      document.getElementById('wizard-preview-grid').innerHTML = '';
+    }
+
+    function handleWizardUploadSimulate() {
+      const presets = MOCK_CATEGORY_IMAGES[state.wizard.category] || MOCK_CATEGORY_IMAGES.textbooks;
+      const targetImg = presets[state.wizard.images.length % presets.length];
+      
+      if (state.wizard.images.length >= 4) {
+        showToast('Maximum 4 pictures allowed for a single item.', 'info');
+        return;
+      }
+      
+      state.wizard.images.push(targetImg);
+      renderWizardPreviewGrid();
+      showToast('Image attached to preview drawer.', 'success');
+    }
+
+    function renderWizardPreviewGrid() {
+      const container = document.getElementById('wizard-preview-grid');
+      container.innerHTML = state.wizard.images.map((img, idx) => `
+        <div class="preview-thumb">
+          <img src="${img}" alt="Preview image">
+          <button class="preview-thumb-close" data-index="${idx}">×</button>
+        </div>
+      `).join('');
+
+      container.querySelectorAll('.preview-thumb-close').forEach(btn => {
+        btn.onclick = () => {
+          const idx = parseInt(btn.getAttribute('data-index'));
+          state.wizard.images.splice(idx, 1);
+          renderWizardPreviewGrid();
+        };
+      });
+    }
+
+    // --- Auth Sign In / Validation Engine ---
+
+    function openAuthModal(mode = 'signin') {
+      const title = document.getElementById('auth-title');
+      const desc = document.getElementById('auth-desc');
+      const nameGroup = document.getElementById('auth-group-name');
+      const submitBtn = document.getElementById('auth-submit-btn');
+      const toggleFooter = document.getElementById('auth-footer-toggle');
+      
+      if (mode === 'signup') {
+        title.innerText = 'Join CommuniTrade';
+        desc.innerText = 'Register using your institutional coordinates to transact safely.';
+        nameGroup.style.display = 'flex';
+        submitBtn.innerText = 'Create Account';
+        toggleFooter.innerHTML = `Already have an account? <span class="auth-toggle" id="auth-toggle-mode">Sign In</span>`;
+      } else {
+        title.innerText = 'Verify Community Account';
+        desc.innerText = 'Sign up using your college credentials for trusted campus trading.';
+        nameGroup.style.display = 'none';
+        submitBtn.innerText = 'Sign In';
+        toggleFooter.innerHTML = `Don't have an account? <span class="auth-toggle" id="auth-toggle-mode">Sign Up</span>`;
+      }
+
+      document.getElementById('auth-toggle-mode').onclick = () => {
+        openAuthModal(mode === 'signin' ? 'signup' : 'signin');
+      };
+
+      document.getElementById('auth-modal').classList.add('active');
+      
+      submitBtn.onclick = () => {
+        handleAuthSubmit(mode);
+      };
+    }
+
+    function verifyEmailDomain(email) {
+      const domains = ['.edu', '.edu.in', '.ac.in'];
+      return domains.some(dom => email.toLowerCase().endsWith(dom));
+    }
+
+    function handleAuthSubmit(mode) {
+      const emailInput = document.getElementById('auth-email-input');
+      const passInput = document.getElementById('auth-pass-input');
+      const nameInput = document.getElementById('auth-name-input');
+      
+      const email = emailInput.value.trim();
+      const pass = passInput.value;
+      const name = nameInput.value.trim();
+
+      if (!email || !pass || (mode === 'signup' && !name)) {
+        showToast('Please fill out all verification inputs.', 'info');
+        return;
+      }
+
+      const isVerifiedDomain = verifyEmailDomain(email);
+
+      if (mode === 'signup') {
+        const newUser = {
+          id: `user_${Date.now()}`,
+          name: name,
+          avatar: `https://images.unsplash.com/photo-${1500000000000 + Math.floor(Math.random() * 500000)}?auto=format&fit=crop&q=80&w=120`,
+          email: email,
+          trustScore: isVerifiedDomain ? 95 : 80,
+          isVerified: true,
+          badges: isVerifiedDomain ? ['Verified Student'] : ['Community Guest'],
+          joinedDate: new Date().toLocaleString('default', { month: 'short', year: 'numeric' })
+        };
+
+        state.users.push(newUser);
+        state.currentUser = newUser;
+        saveState();
+      } else {
+        const matched = state.users.find(u => u.email.toLowerCase() === email.toLowerCase());
+        if (matched) {
+          state.currentUser = matched;
+        } else {
+          const freshUser = {
+            id: `user_${Date.now()}`,
+            name: email.split('@')[0],
+            avatar: 'https://images.unsplash.com/photo-1535713875002-d1d0cf377fde?auto=format&fit=crop&q=80&w=120',
+            email: email,
+            trustScore: isVerifiedDomain ? 95 : 80,
+            isVerified: true,
+            badges: isVerifiedDomain ? ['Verified Student'] : ['Community Guest'],
+            joinedDate: 'May 2026'
+          };
+          state.users.push(freshUser);
+          state.currentUser = freshUser;
+        }
+        saveState();
+      }
+
+      renderNavbarAuth();
+      document.getElementById('auth-modal').classList.remove('active');
+      
+      const welcomeStr = isVerifiedDomain 
+        ? `Welcome ${state.currentUser.name}! 🛡️ Institutional Trust Badge Unlocked!` 
+        : `Welcome ${state.currentUser.name}! Signed in as guest.`;
+      showToast(welcomeStr, 'success');
+    }
+
+    // --- Helpers Utilities ---
+
+    function getTimeAgo(dateStr) {
+      const diffTime = Math.abs(new Date() - new Date(dateStr));
+      const diffDays = Math.floor(diffTime / (1000 * 60 * 60 * 24));
+      
+      if (diffDays === 0) return 'Today';
+      if (diffDays === 1) return 'Yesterday';
+      return `${diffDays} days ago`;
+    }
+
+    function getCurrentTime() {
+      const d = new Date();
+      let hours = d.getHours();
+      let minutes = d.getMinutes();
+      const ampm = hours >= 12 ? 'PM' : 'AM';
+      hours = hours % 12;
+      hours = hours ? hours : 12;
+      minutes = minutes < 10 ? '0' + minutes : minutes;
+      return `${hours}:${minutes} ${ampm}`;
+    }
+
+    // --- App Event Handlers Binding ---
+
+    document.addEventListener('DOMContentLoaded', () => {
+      renderNavbarAuth();
+      renderCategoryChips();
+      renderListingsGrid();
+      renderSafeZones();
+
+      const searchInput = document.getElementById('search-query-input');
+      searchInput.addEventListener('input', (e) => {
+        state.activeFilters.search = e.target.value;
+        renderListingsGrid();
+      });
+
+      const tradeTabs = document.getElementById('trade-tabs-group');
+      tradeTabs.querySelectorAll('.trade-tab').forEach(tab => {
+        tab.addEventListener('click', () => {
+          tradeTabs.querySelector('.active').classList.remove('active');
+          tab.classList.add('active');
+          state.activeFilters.tradeMode = tab.getAttribute('data-mode');
+          renderListingsGrid();
+        });
+      });
+
+      document.getElementById('sort-select').addEventListener('change', (e) => {
+        state.activeFilters.sort = e.target.value;
+        renderListingsGrid();
+      });
+
+      document.getElementById('detail-modal-close').onclick = () => {
+        document.getElementById('product-detail-modal').classList.remove('active');
+      };
+      document.getElementById('listing-modal-close').onclick = () => {
+        document.getElementById('create-listing-modal').classList.remove('active');
+      };
+      document.getElementById('auth-modal-close').onclick = () => {
+        document.getElementById('auth-modal').classList.remove('active');
+      };
+      document.getElementById('chat-drawer-close').onclick = () => {
+        document.getElementById('chat-sidebar-drawer').classList.remove('active');
+      };
+
+      window.onclick = (e) => {
+        const detailModal = document.getElementById('product-detail-modal');
+        const listingModal = document.getElementById('create-listing-modal');
+        const authModal = document.getElementById('auth-modal');
+        
+        if (e.target === detailModal) detailModal.classList.remove('active');
+        if (e.target === listingModal) listingModal.classList.remove('active');
+        if (e.target === authModal) authModal.classList.remove('active');
+      };
+
+      document.getElementById('create-listing-nav-btn').onclick = () => {
+        openListingWizard();
+      };
+      document.getElementById('post-hero-btn').onclick = () => {
+        openListingWizard();
+      };
+
+      const wizardPrevBtn = document.getElementById('wizard-prev-btn');
+      const wizardNextBtn = document.getElementById('wizard-next-btn');
+
+      wizardPrevBtn.onclick = () => {
+        if (state.wizard.step > 1) {
+          state.wizard.step -= 1;
+          updateWizardStepUI();
+        }
+      };
+
+      wizardNextBtn.onclick = () => {
+        handleWizardNext();
+      };
+
+      const wizardTradeTabs = document.getElementById('wizard-trade-tabs');
+      wizardTradeTabs.querySelectorAll('.trade-tab').forEach(tab => {
+        tab.onclick = () => {
+          wizardTradeTabs.querySelector('.active').classList.remove('active');
+          tab.classList.add('active');
+          
+          const val = tab.getAttribute('data-val');
+          state.wizard.tradeMode = val;
+          
+          const priceGroup = document.getElementById('wizard-group-price');
+          const exchangeGroup = document.getElementById('wizard-group-exchange');
+          const priceLabel = document.getElementById('wizard-price-label');
+
+          if (val === 'exchange') {
+            priceGroup.style.display = 'none';
+            exchangeGroup.style.display = 'flex';
+          } else {
+            priceGroup.style.display = 'flex';
+            exchangeGroup.style.display = 'none';
+            priceLabel.innerText = val === 'rent' ? 'Rental Price Per Day ($)' : 'Sale Price ($)';
+          }
+        };
+      });
+
+      document.getElementById('wizard-upload-drop').onclick = () => {
+        handleWizardUploadSimulate();
+      };
+
+      document.getElementById('chat-send-btn').onclick = () => {
+        handleSendMessage();
+      };
+      document.getElementById('chat-msg-input').onkeydown = (e) => {
+        if (e.key === 'Enter') {
+          handleSendMessage();
+        }
+      };
+
+    });
+  </script>
+
+</body>
+</html>
